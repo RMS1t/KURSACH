@@ -6,8 +6,10 @@ services:
       context: ../myproject.loc
       dockerfile: ../docker/php/Dockerfile
     restart: unless-stopped
+    env_file:
+      - ../docker/.env
     expose:
-      - 9000
+      - ${Php_Exp_port}
     container_name: my-app
     volumes:
       - '../myproject.loc:/www'
@@ -21,7 +23,7 @@ services:
       - '../myproject.loc:/www'
       -  '../docker/nginx/conf.d:/etc/nginx/conf.d'
     ports:
-      - '8000:80'
+      - '${Nginx_port}:80'
 
 
   # --- database - 'postgresql' ---
@@ -37,5 +39,7 @@ services:
   adminer:
     image: adminer
     restart: unless-stopped
+    env_file:
+      - ../docker/.env
     ports:
-      - 8080:8080
+      - '${Adminer_port}:8080'
