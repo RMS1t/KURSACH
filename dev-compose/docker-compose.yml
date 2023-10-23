@@ -1,9 +1,18 @@
 version: '3.8'
 
+
+volumes:
+  db-data:
+    external:
+      name: ../pqsql/data
+  project:
+    external:
+      name: ../myproject
+
 services:
   app:
     build:
-      context: ../myproject.loc
+      context: ../myproject
       dockerfile: ../docker/php/Dockerfile
     restart: unless-stopped
     env_file:
@@ -12,7 +21,7 @@ services:
       - ${Php_Exp_port}
     container_name: my-app
     volumes:
-      - '../myproject.loc:/www'
+      - 'project:/www'
 
   # --- server - 'nginx' ---
   nginx:
@@ -20,7 +29,7 @@ services:
     container_name: my-nginx
     restart: unless-stopped
     volumes:
-      - '../myproject.loc:/www'
+      - 'project:/www'
       -  '../docker/nginx/conf.d:/etc/nginx/conf.d'
     ports:
       - '${Nginx_port}:80'
@@ -33,7 +42,10 @@ services:
     restart: unless-stopped
     env_file:
       - ../docker/.env
-
+    volumes:
+      - 'db-data:/var/lib/postgresql/data'
+    ports:
+      - "5432:5432"
 
   # --- database environment - 'adminer' ---
   adminer:
