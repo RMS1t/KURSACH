@@ -1,8 +1,6 @@
 <?php
-
-
 namespace MyProject\Exceptions;
 
-class DbException extends \Exception
+class Forbidden extends \Exception
 {
 }

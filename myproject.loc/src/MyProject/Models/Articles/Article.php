@@ -2,52 +2,119 @@
 
 namespace MyProject\Models\Articles;
 
+use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Models\ActiveRecordEntity;
-use MyProject\Models\Users\User;
+use  MyProject\Models\Users\User;
 
 class Article extends ActiveRecordEntity
 {
-    protected string $name;
+    /** @var string */
+    protected $name;
 
-    protected string $text;
+    /** @var string */
+    protected $text;
 
-    protected string $authorId;
+    /** @var string */
+    protected $authorId;
 
-    protected string $createdAt;
+    /** @var string */
+    protected $createdAt;
 
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function getText(): string
     {
         return $this->text;
+    }
+
+    protected static function getTableName(): string
+    {
+        return 'articles';
+    }
+
+    public function getAuthorId(): int
+    {
+        return (int) $this->authorId;
+    }
+
+    public function getId(): int
+    {
+        return (int) $this->id;
     }
 
     public function getAuthor(): User
     {
         return User::getById($this->authorId);
     }
-
-    public function setName(string $name): void
+    public function setAuthor(User $author): void
     {
-        $this->name = $name;
+        $this->authorId = $author->getId();
     }
 
-    public function setText(string $text): void
+    public function setName($name): string
     {
-        $this->text = $text;
+        return $this->name=$name;
     }
 
-
-    public function setAuthor(User $user): void
+    public function setText($text): string
     {
-        $this->authorId = $user->getId();
+        return $this->text=$text;
     }
 
-    protected static function getTableName(): string
+    public function setcreatedAt($date): string
     {
-        return 'articles';
+        return $this->createdAt=$date;
+
+    }
+    public function setauthorId($Id): string
+    {
+        return $this->authorId=$Id;
+
+    }
+    public static function createFromArray(array $fields, User $author): Article
+    {
+        if (empty($fields['name'])) {
+            throw new InvalidArgumentException('Не передано название статьи');
+        }
+
+        if (empty($fields['text'])) {
+            throw new InvalidArgumentException('Не передан текст статьи');
+        }
+
+        $article = new Article();
+
+        $article->setAuthor($author);
+        $article->setName($fields['name']);
+        $article->setText($fields['text']);
+
+        $article->save();
+
+        return $article;
+    }
+    public function updateFromArray(array $fields): Article
+    {
+        if (empty($fields['name'])) {
+            throw new InvalidArgumentException('Не передано название статьи');
+        }
+
+        if (empty($fields['text'])) {
+            throw new InvalidArgumentException('Не передан текст статьи');
+        }
+
+        $this->setName($fields['name']);
+        $this->setText($fields['text']);
+
+        $this->save();
+
+        return $this;
     }
 }

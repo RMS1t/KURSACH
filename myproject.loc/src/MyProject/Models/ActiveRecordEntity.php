@@ -1,13 +1,16 @@
 <?php
-
 namespace MyProject\Models;
 
 use MyProject\Services\Db;
 
 abstract class ActiveRecordEntity
 {
-    protected  int $id;
-    
+    /** @var int */
+    protected $id;
+
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
@@ -24,21 +27,52 @@ abstract class ActiveRecordEntity
         return lcfirst(str_replace('_', '', ucwords($source, '_')));
     }
 
+    /**
+     * @return static[]
+     */
     public static function findAll(): array
     {
-        $db = $db = Db::getInstance();
-        return $db->query('SELECT * FROM `' . static::getTableName() . '`;', [], static::class);
+        $db=Db::getInstance();
+        return $db->query('SELECT * FROM ' . static::getTableName() . ';', [], static::class);
     }
+
+    abstract protected static function getTableName(): string;
 
     public static function getById(int $id): ?self
     {
-        $db = $db = Db::getInstance();
+        $db=Db::getInstance();
         $entities = $db->query(
-            'SELECT * FROM `' . static::getTableName() . '` WHERE id=:id;',
+            'SELECT * FROM ' . static::getTableName() . ' WHERE id=:id;',
             [':id' => $id],
             static::class
         );
         return $entities ? $entities[0] : null;
+    }
+
+
+//    ПРОБЛЕМЫ с  квери
+    public static function getByArticleId(int $id): ?array
+    {
+        $db=Db::getInstance();
+
+        $entities = $db->query(
+            'SELECT * FROM  "' . static::getTableName()  . '"  WHERE articleId=:id;',
+            [':id' => $id],
+            static::class
+        );
+
+        if ($entities== null){
+
+            $entities = $db->query(
+                'SELECT * FROM ' . static::getTableName() . ' WHERE articleId=:id;',
+                [':id' => -1],
+                static::class
+            );
+
+            return $entities;
+        }
+
+        return $entities ;
     }
 
     public function save(): void
@@ -51,17 +85,26 @@ abstract class ActiveRecordEntity
         }
     }
 
-    public function delete(): void
+    private function mapPropertiesToDbFormat(): array
     {
-        $db = Db::getInstance();
-        $db->query(
-            'DELETE FROM `' . static::getTableName() . '` WHERE id = :id',
-            [':id' => $this->id]
-        );
-        $this->id = null;
+        $reflector = new \ReflectionObject($this);
+        $properties = $reflector->getProperties();
+
+        $mappedProperties = [];
+        foreach ($properties as $property) {
+            $propertyName = $property->getName();
+            $propertyNameAsUnderscore = $this->camelCaseToUnderscore($propertyName);
+            $mappedProperties[$propertyNameAsUnderscore] = $this->$propertyName;
+        }
+
+        return $mappedProperties;
     }
 
-    abstract protected static function getTableName(): string;
+    private function camelCaseToUnderscore(string $source): string
+    {
+        return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $source));
+    }
+
 
     private function update(array $mappedProperties): void
     {
@@ -78,7 +121,6 @@ abstract class ActiveRecordEntity
         $db = Db::getInstance();
         $db->query($sql, $params2values, static::class);
     }
-
     private function insert(array $mappedProperties): void
     {
         $filteredProperties = array_filter($mappedProperties);
@@ -101,39 +143,30 @@ abstract class ActiveRecordEntity
         $db = Db::getInstance();
         $db->query($sql, $params2values, static::class);
         $this->id = $db->getLastInsertId();
-        $this->refresh();
+        $this->created_at = $db->getTime();
     }
 
-    private function refresh(): void
+    public function delete(): void
     {
-        $objectFromDb = static::getById($this->id);
-        $reflector = new \ReflectionObject($objectFromDb);
-        $properties = $reflector->getProperties();
+        $db = Db::getInstance();
+        $db->query(
+            'DELETE FROM ' . static::getTableName() . ' WHERE id = :id',
+            [':id' => $this->id]
+        );
+        $this->id = null;
+    }
 
-        foreach ($properties as $property) {
-            $property->setAccessible(true);
-            $propertyName = $property->getName();
-            $this->$propertyName = $property->getValue($objectFromDb);
+    public static function findOneByColumn(string $columnName, $value): ?self
+    {
+        $db = Db::getInstance();
+        $result = $db->query(
+            'SELECT * FROM ' . static::getTableName() . ' WHERE ' . $columnName . ' = :value LIMIT 1;',
+            [':value' => $value],
+            static::class
+        );
+        if ($result === []) {
+            return null;
         }
-    }
-
-    private function mapPropertiesToDbFormat(): array
-    {
-        $reflector = new \ReflectionObject($this);
-        $properties = $reflector->getProperties();
-
-        $mappedProperties = [];
-        foreach ($properties as $property) {
-            $propertyName = $property->getName();
-            $propertyNameAsUnderscore = $this->camelCaseToUnderscore($propertyName);
-            $mappedProperties[$propertyNameAsUnderscore] = $this->$propertyName;
-        }
-
-        return $mappedProperties;
-    }
-
-    private function camelCaseToUnderscore(string $source): string
-    {
-        return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $source));
+        return $result[0];
     }
 }

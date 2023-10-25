@@ -14,14 +14,13 @@ class Db
     private function __construct()
     {
         $dbOptions = (require __DIR__ . '/../../settings.php')['db'];
-        $dsn = "pgsql:host={$dbOptions['host']};dbname={$dbOptions['dbname']};";
+        $dsn = "pgsql:host={$dbOptions['host']};dbname={$dbOptions['dbname']};options='--client_encoding=UTF8';";
         try {
             $this->pdo = new \PDO(
                 $dsn,
                 $dbOptions['user'],
                 $dbOptions['password']
             );
-            $this->pdo->exec('set encoding utf8;');
         } catch (\PDOException $e) {
             throw new DbException('Ошибка при подключении к базе данных: ' . $e->getMessage());
         }

@@ -1,24 +1,35 @@
 <?php
 
-
 namespace MyProject\Controllers;
 
+use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Exceptions\NotFoundException;
+use MyProject\Exceptions\UnauthorizedException;
 use MyProject\Models\Articles\Article;
+use MyProject\Models\Comments\Comment;
 use MyProject\Models\Users\User;
-use MyProject\View\View;
 
-class ArticlesController
+class ArticlesController extends AbstractController
 {
-    /** @var View */
-    private $view;
 
-    public function __construct()
+
+    public function view(int $articleId)
     {
-        $this->view = new View(__DIR__ . '/../../../templates');
+        $article = Article::getById($articleId);
+        var_dump($article);
+        $comments = Comment::getByArticleId($articleId);
+        var_dump( $comments);
+        if ($article === null) {
+            throw new NotFoundException();
+        }
+
+        $this->view->renderHtml('articles/view.php', [
+            'article' => $article,
+            'comments'=> $comments
+        ]);
     }
 
-    public function view(int $articleId): void
+    public function edit(int $articleId)
     {
         $article = Article::getById($articleId);
 
@@ -26,38 +37,66 @@ class ArticlesController
             throw new NotFoundException();
         }
 
-        $this->view->renderHtml('articles/view.php', [
-            'article' => $article
-        ]);
+
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
+        if ($this->user->getRole() !== 'admin') {
+            throw new UnauthorizedException();
+        }
+
+        if (!empty($_POST)) {
+            try {
+                $article->updateFromArray($_POST);
+            } catch (InvalidArgumentException $e) {
+                $this->view->renderHtml('articles/edit.php', ['error' => $e->getMessage(), 'article' => $article]);
+                return;
+            }
+
+            header('Location: /articles/' . $article->getId(), true, 302);
+            exit();
+        }
+
+        $this->view->renderHtml('articles/edit.php', ['article' => $article]);
     }
 
-    public function edit(int $articleId): void
+    public function add(): void
     {
-        /** @var Article $article */
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
+        if ($this->user->getRole() !== 'admin') {
+        throw new UnauthorizedException();
+    }
+
+        if (!empty($_POST)) {
+            try {
+                $article = Article::createFromArray($_POST, $this->user);
+            } catch (InvalidArgumentException $e) {
+                $this->view->renderHtml('articles/add.php', ['error' => $e->getMessage()]);
+                return;
+            }
+
+            header('Location: /articles/' . $article->getId(), true, 302);
+            exit();
+        }
+
+        $this->view->renderHtml('articles/add.php');
+    }
+
+
+    public function delete(int $articleId): void
+    {
         $article = Article::getById($articleId);
 
         if ($article === null) {
             $this->view->renderHtml('errors/404.php', [], 404);
             return;
         }
-
-        $article->setName('Новое название статьи');
-        $article->setText('Новый текст статьи');
-
-        $article->save();
-    }
-
-    public function add(): void
-    {
-        $author = User::getById(1);
-
-        $article = new Article();
-        $article->setAuthor($author);
-        $article->setName('Новое название статьи');
-        $article->setText('Новый текст статьи');
-
-        $article->save();
-
+        $article->delete();
         var_dump($article);
     }
+
+
+
 }

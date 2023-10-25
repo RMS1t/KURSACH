@@ -1,5 +1,4 @@
 <?php
-
 try {
     spl_autoload_register(function (string $className) {
         require_once __DIR__ . '/../src/' . str_replace('\\', '/', $className) . '.php';
@@ -7,7 +6,6 @@ try {
 
     $route = $_GET['route'] ?? '';
     $routes = require __DIR__ . '/../src/routes.php';
-
     $isRouteFound = false;
     foreach ($routes as $pattern => $controllerAndAction) {
         preg_match($pattern, $route, $matches);
@@ -16,9 +14,8 @@ try {
             break;
         }
     }
-
     if (!$isRouteFound) {
-        throw new \myproject\Архитектура\src\MyProject\Exceptions\NotFoundException();
+        throw new \MyProject\Exceptions\NotFoundException();
     }
 
     unset($matches[0]);
