@@ -6,12 +6,8 @@ use MyProject\Services\Db;
 
 abstract class ActiveRecordEntity
 {
-    /** @var int */
-    protected $id;
-
-    /**
-     * @return int
-     */
+    protected  int $id;
+    
     public function getId(): int
     {
         return $this->id;
@@ -28,19 +24,12 @@ abstract class ActiveRecordEntity
         return lcfirst(str_replace('_', '', ucwords($source, '_')));
     }
 
-    /**
-     * @return static[]
-     */
     public static function findAll(): array
     {
         $db = $db = Db::getInstance();
         return $db->query('SELECT * FROM `' . static::getTableName() . '`;', [], static::class);
     }
 
-    /**
-     * @param int $id
-     * @return static|null
-     */
     public static function getById(int $id): ?self
     {
         $db = $db = Db::getInstance();
