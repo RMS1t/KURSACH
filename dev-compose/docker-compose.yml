@@ -3,8 +3,7 @@ version: '3.8'
 
 volumes:
   db-data:
-    external:
-      name: ../pqsql/data
+    driver:local
 
 
 services:
