@@ -5,9 +5,7 @@ volumes:
   db-data:
     external:
       name: ../pqsql/data
-  project:
-    external:
-      name: ../myproject
+
 
 services:
   app:
@@ -21,7 +19,7 @@ services:
       - ${Php_Exp_port}
     container_name: my-app
     volumes:
-      - 'project:/www'
+      - ../myproject:/www'
 
   # --- server - 'nginx' ---
   nginx:
@@ -29,7 +27,7 @@ services:
     container_name: my-nginx
     restart: unless-stopped
     volumes:
-      - 'project:/www'
+      - '../myproject:/www'
       -  '../docker/nginx/conf.d:/etc/nginx/conf.d'
     ports:
       - '${Nginx_port}:80'
