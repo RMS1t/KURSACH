@@ -6,30 +6,21 @@ use MyProject\Models\ActiveRecordEntity;
 
 class User extends ActiveRecordEntity
 {
-    /** @var string */
-    protected $nickname;
+     
+    protected string $nickname;
 
-    /** @var string */
-    protected $email;
+    protected string $email;
 
-    /** @var int */
-    protected $isConfirmed;
+   protected string $isConfirmed;
 
-    /** @var string */
-    protected $role;
+    protected string $role;
 
-    /** @var string */
-    protected $passwordHash;
+   protected string $passwordHash;
 
-    /** @var string */
-    protected $authToken;
+   protected string $authToken;
 
-    /** @var string */
-    protected $createdAt;
+   protected string $createdAt;
 
-    /**
-     * @return string
-     */
     public function getNickname(): string
     {
         return $this->nickname;
