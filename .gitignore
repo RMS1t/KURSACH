@@ -1,6 +1,3 @@
 /docker/.env
 **/logs
 .idea
-/myproject/.idea
-/myproject/src
-/myproject/templates
