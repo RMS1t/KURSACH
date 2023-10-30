@@ -15,6 +15,6 @@ class Site
     public function hello(): string
     {
         $view = new View();
-        return $view->render('site.hello', ['message' => 'hello working']);
+        return $view->render('site.hello', ['message' => 'hello wwwworking']);
     }
 }
