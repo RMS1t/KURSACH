@@ -9,6 +9,7 @@ services:
     expose:
         - 9000
     container_name: my-app
+    depends_on:
     volumes:
         - '../myproject.loc:/www'
 

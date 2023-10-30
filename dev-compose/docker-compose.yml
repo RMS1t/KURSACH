@@ -10,12 +10,14 @@ volumes:
 services:
   app:
     build:
-      context: ../myproject
+      context: ../pop-it-mvc
       dockerfile: ../docker/php/Dockerfile
     restart: unless-stopped
     container_name: my-app
+    depends_on:
+      - composer
     volumes:
-      - ../myproject:/www'
+      - ../pop-it-mvc:/pop-it-mvc
 
   # --- server - 'nginx' ---
   nginx:
@@ -23,7 +25,7 @@ services:
     container_name: my-nginx
     restart: unless-stopped
     volumes:
-      - '../myproject:/www'
+      - '../pop-it-mvc:/pop-it-mvc'
       -  '../docker/nginx/conf.d:/etc/nginx/conf.d'
     ports:
       - '${Nginx_port:-80}:80'
