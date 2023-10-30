@@ -1,0 +1,13 @@
+{
+    "name": "rms1t/gryschewsky_style",
+    "description": "simple mvc project",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "rms1t"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
