@@ -45,7 +45,7 @@ class View
     {
         $path = $this->getPathToView($view);
 
-        var_dump(123);
+
 
         if (file_exists($this->getPathToMain()) && file_exists($path)) {
 
