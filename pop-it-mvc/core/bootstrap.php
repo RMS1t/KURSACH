@@ -8,14 +8,15 @@ spl_autoload_register(function ($className) {
     $className = str_replace('\\', '/', $className);
 
     foreach ($paths['classes'] as $path) {
-        $fileName = $_SERVER['DOCUMENT_ROOT'] . "/$paths[root]/$path/$className.php";
+
+        $fileName = $_SERVER['DOCUMENT_ROOT'] . "$paths[root]/$path/$className.php";
+
         if (file_exists($fileName)) {
             require_once $fileName;
-        }
-        else{
             var_dump($fileName);
-            require_once $fileName;
+            continue;
         }
+
     }
 });
 
@@ -27,9 +28,12 @@ spl_autoload_register(function ($className) {
             $name = explode('.', $file)[0];
             if (!empty($name)) {
                 $settings[$name] = include __DIR__ . "$path/$file";
+
             }
         }
         return $settings;
     }
+
+require_once __DIR__ . '/../routes/web.php';
 
 return new Src\Application(new Src\Settings(getConfigs()));
