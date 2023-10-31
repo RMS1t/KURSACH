@@ -14,8 +14,7 @@ services:
       dockerfile: ../docker/php/Dockerfile
     restart: unless-stopped
     container_name: my-app
-    depends_on:
-      - composer
+
     volumes:
       - ../pop-it-mvc:/pop-it-mvc
 
@@ -38,7 +37,7 @@ services:
     restart: unless-stopped
 
     environment:
-      POSTGRES_DB: ${DB:-retmix}
+      POSTGRES_DB: ${DB:-mvc}
       POSTGRES_USER: ${USER:-retmix}
       POSTGRES_PASSWORD: ${PASSWORD:-retmix}
     volumes:

@@ -2,19 +2,22 @@
 
 namespace Controller;
 
+use Illuminate\Contracts\Validation\ValidatorAwareRule;
+use Model\Post;
+use Src\Request;
 use Src\View;
 
 class Site
 {
-    public function index(): string
+    public function index(Request $request): string
     {
-        $view = new View();
-        return $view->render('layouts.main', ['content' => 'index working']);
+        $posts = Post::where('id', $request->id)->get();
+        return (new View())->render('site.post', ['posts' => $posts]);
     }
+
 
     public function hello(): string
     {
-        $view = new View();
-        return $view->render('site.hello', ['message' => 'hello wwwworking']);
+        return new View('site.hello', ['message' => 'hello working']);
     }
 }
