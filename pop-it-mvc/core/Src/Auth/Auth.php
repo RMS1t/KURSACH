@@ -6,8 +6,18 @@ use Src\Session;
 
 class Auth
 {
+
     //Свойство для хранения любого класса, реализующего интерфейс IdentityInterface
     private static IdentityInterface $user;
+
+    //Генерация нового токена для CSRF
+    public static function generateCSRF(): string
+    {
+        $token = md5(time());
+        Session::set('csrf_token', $token);
+        return $token;
+    }
+
 
     //Инициализация класса пользователя
     public static function init(IdentityInterface $user): void
