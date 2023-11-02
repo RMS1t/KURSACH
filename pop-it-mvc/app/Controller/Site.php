@@ -38,18 +38,19 @@ class Site
                 'unique' => 'Поле :field должно быть уникально'
             ]);
 
-            if($validator->fails()){
+            if ($validator->fails()) {
                 return new View('site.signup',
                     ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
             }
 
-      if (User::create($request->all())) {
-               app()->route->redirect('/login');
-          }
-        }
+            if (User::create($request->all())) {
+                app()->route->redirect('/login');
+                return false;
 
-        return new View('site.signup');
-    }
+            }
+        }
+            return new View('site.signup');
+        }
 
 
     public function login(Request $request): string

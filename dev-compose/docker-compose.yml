@@ -14,9 +14,18 @@ services:
       dockerfile: ../docker/php/Dockerfile
     restart: unless-stopped
     container_name: my-app
-
+    user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
     volumes:
       - ../pop-it-mvc:/pop-it-mvc
+    environment:
+
+      PHP_IDE_CONFIG: ${PHP_IDE_CONFIG:-serverName=docker}
+      XDEBUG_MODE: ${XDEBUG_MODE:-yes}
+      XDEBUG_CONFIG: "client_host=host.docker.internal"
+      XDEBUG_TRIGGER: 'yes'
+
+
+
 
   # --- server - 'nginx' ---
   nginx:
