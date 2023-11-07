@@ -46,7 +46,7 @@ class Auth
     }
 
     //Возврат текущего аутентифицированного пользователя
-    public static function user()
+    public static function user(): IdentityInterface
     {
         $id = Session::get('id') ?? 0;
         return self::$user->findIdentity($id);

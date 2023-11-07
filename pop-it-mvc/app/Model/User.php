@@ -26,7 +26,7 @@ class User extends Model implements IdentityInterface
     }
 
     //Выборка пользователя по первичному ключу
-    public function findIdentity(int $id)
+    public function findIdentity(int $id):self
     {
         return self::where('id', $id)->first();
     }

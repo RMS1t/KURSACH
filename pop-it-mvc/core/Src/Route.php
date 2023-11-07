@@ -17,7 +17,7 @@ class Route
 
     //Свойство для хранения текущего маршрута
     private string $currentRoute = '';
-    private $currentHttpMethod;
+    private string $currentHttpMethod;
 
     //Свойство для префикса для всех маршрутов
     private string $prefix = '';
