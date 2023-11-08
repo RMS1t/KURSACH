@@ -1,6 +1,6 @@
 FROM php:8.1-fpm-alpine
 
-WORKDIR /project
+WORKDIR /example-app
 
 
 RUN apk update && apk add \
