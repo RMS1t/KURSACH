@@ -19,6 +19,13 @@ RUN install-php-extensions \
             pdo \
             pdo_pgsql
 
+RUN apk add --no-cache linux-headers  \
+    && apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && pecl clear-cache \
+    && apk del .build-dependencies
+
 ADD ./php.ini /usr/local/etc/php/conf.d/40-custom.ini
 
 COPY . .
