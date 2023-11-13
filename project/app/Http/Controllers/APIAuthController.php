@@ -26,7 +26,7 @@ class APIAuthController extends Controller
 
     $input = $request->all();
     $input['password'] = bcrypt($input['password']);
-    $user = User::factory()->make();
+    $user = User::create($request->all());
     // 3
 
     $token = $user->createToken($request->device_name)->plainTextToken;
@@ -72,15 +72,15 @@ public function update(Request $request)
     $name = $file->getClientOriginalName();
     $extension = $file->getClientOriginalExtension();
 
-    $path = $request->file('avatar')->store(
-        'files/'. $name . '.'. $extension , 's3'
+    $path = $request->file('avatar')->storeas(
+        'files/'. $name  , 's3'
     );
 
     $response=[
         "success" => 'true',
         "code"=> '200',
         "message" =>"Success",
-        "name" => $name . $extension,
+        "name" => $name ,
         "url" => "{{host}}/files/qweasd1234",
         "file_id" => "qweasd1234"
     ];

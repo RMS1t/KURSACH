@@ -17,43 +17,63 @@ class ApiController extends BaseController
 
     public function index()
     {
-        $response='index working';
+        $response = 'index working';
 
         return response()->json($response, 200);
     }
-    public function signup(Request $request)
+
+    public function update(Request $request)
     {
 
-            $validator = new Validator($request->all(), [
-                'name' => ['required'],
-                'login' => ['required', 'unique:users,login'],
-                'password' => ['required']
-            ], [
-                'required' => 'Поле :field пусто',
-                'unique' => 'Поле :field должно быть уникально'
-            ]);
+        $user_id = $request->user()->id;
+        $file = $request->file('avatar');
 
-            if ($validator->fails()) {
+        $name = $file->getClientOriginalName();
+        $name = explode('.', $name)[0];
 
-                throw  new Exception( $validator->errors(),403);
+        $extension = $file->getClientOriginalExtension();
 
+
+        //Block for change a duplicated file names
+        $user_files = DB::table('files')
+            ->select('name')
+            ->where('user_id', '=', $user_id)
+            ->get()->toArray();
+
+        $counter = 0;
+
+        foreach ($user_files as $array_object) {
+            if (stristr($array_object, $name) === TRUE) {
+                $counter++;
             }
+        }
 
-            if (User::create($request->all())) {
-                $response=[ 'message'=>'Signup successful', ];
-                return   response()->json($response, 200);
+        if ($counter != 0) {
+            $name = $name . '(' . $counter . ').' . $extension;
+        } else {
+            $name = $name . $extension;
+        }
+        //endblock
 
-            }
-        throw  new Exception( 'Somebody going bad',500);
+
+
+        $file_id=File::make(['name'=> $name,'user_id' => $user_id]);
+
+        $path = $request->file('avatar')->storeas(
+            $user_id . '/' . $name, 's3'
+        );
+        $response = [
+            "success" => 'true',
+            "code" => '200',
+            "message" => "Success",
+            "name" => $name,
+            "url" => "{{host}}/api/files/" . $user_id . "/" . $file_id,
+            "file_id" => $file_id
+        ];
+
+
+        return $response;
     }
 
-    public function logout()
-    {
-
-    }
-    public function upload()
-    {
-
-    }
 
 }
