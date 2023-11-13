@@ -65,7 +65,7 @@ public function token(Request $request)
 
 public function update(Request $request)
 {
-  
+
 
     $file = $request->file('avatar');
 
@@ -76,7 +76,7 @@ public function update(Request $request)
         'files/'. $name . '.'. $extension , 's3'
     );
 
-    $response=[ 
+    $response=[
         "success" => 'true',
         "code"=> '200',
         "message" =>"Success",

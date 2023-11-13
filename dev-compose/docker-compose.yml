@@ -11,7 +11,7 @@ services:
   app:
     build:
       context: ../example-app
-      dockerfile: ../docker/php/Dockerfile
+      dockerfile: php/Dockerfile
     restart: unless-stopped
     container_name: my-app
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
