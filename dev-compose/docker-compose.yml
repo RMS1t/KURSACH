@@ -10,13 +10,13 @@ volumes:
 services:
   app:
     build:
-      context: ../pop-it-mvc
+      context: ../project
       dockerfile: ../docker/php/Dockerfile
     restart: unless-stopped
     container_name: my-app
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
     volumes:
-      - ../pop-it-mvc:/pop-it-mvc
+      - ../project:/project
     environment:
 
       PHP_IDE_CONFIG: ${PHP_IDE_CONFIG:-serverName=docker}
@@ -33,7 +33,7 @@ services:
     container_name: my-nginx
     restart: unless-stopped
     volumes:
-      - '../pop-it-mvc:/pop-it-mvc'
+      - '../project:/project'
       -  '../docker/nginx/conf.d:/etc/nginx/conf.d'
     ports:
       - '${Nginx_port:-80}:80'

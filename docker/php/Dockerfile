@@ -1,6 +1,6 @@
 FROM php:8.1-fpm-alpine
 
-WORKDIR /pop-it-mvc
+WORKDIR /project
 
 
 RUN apk update && apk add \
