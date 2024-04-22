@@ -17,8 +17,24 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/', [ \App\Http\Controllers\ApiController::class,'index']);
-Route::middleware('auth:sanctum')->post('register', [\App\Http\Controllers\APIAuthController::class,'register']);
-Route::post('login',[\App\Http\Controllers\APIAuthController::class,'token']);
-Route::post('upload',[\App\Http\Controllers\APIAuthController::class,'update']);
+
+Route::middleware('auth:sanctum')->post('resume/create',[\App\Http\Controllers\ResumeController::class,'store']);
+Route::middleware('auth:sanctum')->post('company/create',[\App\Http\Controllers\CompanyController::class,'store']);
+
+
+Route::middleware('auth:sanctum')->post('resume/delete/{id}',[\App\Http\Controllers\ResumeController::class,'destroy']);
+Route::middleware('auth:sanctum')->post('company/delete/{id}',[\App\Http\Controllers\CompanyController::class,'destroy']);
+
+Route::get('resume/{id}',[\App\Http\Controllers\ResumeController::class,'show']);
+Route::get('company/{id}',[\App\Http\Controllers\CompanyController::class,'show']);
+
+Route::get('resume',[\App\Http\Controllers\ResumeController::class,'index']);
+Route::get('company',[\App\Http\Controllers\CompanyController::class,'index']);
+
+
+Route::get('resume/tag-find/{tag:slug}',[\App\Http\Controllers\ResumeController::class,'findByTag']);
+Route::get('company/tag-find/{tag:slug}',[\App\Http\Controllers\CompanyController::class,'findByTag']);
+
+Route::get('resume/tag-find/{substr:slug}',[\App\Http\Controllers\ResumeController::class,'findResume']);
+Route::get('company/tag-find/{substr:slug}',[\App\Http\Controllers\CompanyController::class,'findResume']);
 
