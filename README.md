@@ -8,7 +8,7 @@
 1) cd dev-compose
 2) docker compose up --build -d
 3) docker compose -it app /bin/bash
-4) composer update
+4) composer install
 5) mv .env.example .env
 6) php artisan cache:clear
 7) composer dump-autoload
