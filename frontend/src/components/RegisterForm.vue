@@ -1,5 +1,5 @@
 <template>
-  <form class="register-form">
+  <form class="register-form" @submit.prevent>
     <div class="register-form__field">
       <div class="register-form__field-label">
         <label for="patronymic">Введите логин</label>
@@ -20,7 +20,7 @@
         </select>
       </div>
     </div>
-    <button class="register-form__send" onclick="registerRuntimeCompiler">Отправить</button>
+    <button class="register-form__send" @click="registrationPostRequest">Отправить</button>
   </form>
 </template>
 
@@ -34,7 +34,7 @@ const model = ref({
 })
 async function registrationPostRequest() {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
       method: 'POST',
       body: JSON.stringify(
           {
@@ -61,10 +61,15 @@ onMounted(() => {
   @import "./../assets/base.css";
   @import "./../assets/app";
 .register-form {
+  width: 400px;
   box-shadow: var(--drop-shadow-base);
   color: var(--color-for-base-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $interval-base;
+  padding: $interval-base;
   &__field {
-    padding: $interval-base;
     display: flex;
     flex-direction: column;
     gap: $interval-smaller;
@@ -80,6 +85,12 @@ onMounted(() => {
 
       }
     }
+  }
+  &__send {
+    width: 150px;
+    height: 30px;
+    background-color: #ffb8c6;
+    border: none;
   }
 }
 

@@ -7,10 +7,10 @@ const router = createRouter({
     {
       path: '/register',
       name: 'register',
-      component: RegisterForm
+      component: () => import('../pages/RegistrationPage.vue')
     },
     {
-      path: '/about',
+      path: '/register',
       name: 'about',
     }
   ]
