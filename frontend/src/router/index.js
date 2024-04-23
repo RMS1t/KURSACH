@@ -1,14 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import RegisterForm from "@/components/RegisterForm.vue";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_API_URL),
+  history: createWebHistory(),
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path: '/register',
+      name: 'register',
+      component: () => import('../pages/RegistrationPage.vue')
     },
     {
-      path: '/about',
+      path: '/register',
       name: 'about',
     }
   ]
