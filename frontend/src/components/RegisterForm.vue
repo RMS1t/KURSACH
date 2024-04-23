@@ -14,11 +14,16 @@
         <input type="password" id="password" placeholder="***********" class="register-form__field-label_input" v-model="model.password">
       </div>
       <div>
-        <select v-model="model.option">
+        <select v-model="model.role">
           <option>Обычный</option>
           <option>Компания</option>
         </select>
       </div>
+      <div class="register-form__field-label">
+        <label for="device_name">Введите пароль</label>
+        <input type="text" id="device_name" placeholder="kdvnksj" class="register-form__field-label_input" v-model="model.device_name">
+      </div>
+
     </div>
     <button class="register-form__send" @click="registrationPostRequest">Отправить</button>
   </form>
@@ -30,7 +35,8 @@ const model = ref({
   login: '',
   email: '',
   password: '',
-  option: ''
+  role: '',
+  device_name: ''
 })
 async function registrationPostRequest() {
   try {
@@ -40,7 +46,9 @@ async function registrationPostRequest() {
           {
             fio: model.value.fio,
             email: model.value.email,
-            password: model.value.password
+            password: model.value.password,
+            role: model.value.role,
+            device_name: model.value.device_name
           }
       ),
       headers: {
