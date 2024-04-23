@@ -18,9 +18,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::post("register",[\App\Http\Controllers\Auth\RegisteredUserController::class,"store"]);
-Route::post("auth",[\App\Http\Controllers\Auth\AuthenticatedSessionController::class,"store"]);
+Route::post("register",[\App\Http\Controllers\ApiAuthController::class,"register"]);
+Route::post("auth",[\App\Http\Controllers\ApiAuthController::class,"token"]);
+Route::post("auth",[\App\Http\Controllers\ApiAuthController::class,"logout"]);
+//Route::post("register",[\App\Http\Controllers\Auth\RegisteredUserController::class,"store"]);
+//Route::post("auth",[\App\Http\Controllers\Auth\AuthenticatedSessionController::class,"store"]);
 Route::middleware('auth:sanctum')->post('resume/create',[\App\Http\Controllers\ResumeController::class,'store']);
 Route::middleware('auth:sanctum')->post('company/create',[\App\Http\Controllers\CompanyController::class,'store']);
 
