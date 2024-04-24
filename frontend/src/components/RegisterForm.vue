@@ -3,7 +3,7 @@
     <div class="register-form__field">
       <div class="register-form__field-label">
         <label for="patronymic">Введите логин</label>
-        <input type="text" id="patronymic" placeholder="retmix" class="register-form__field-label_input" v-model="model.login">
+        <input type="text" id="patronymic" placeholder="retmix" class="register-form__field-label_input" v-model="model.name">
       </div>
       <div class="register-form__field-label">
         <label for="email">Введите свою электронную почту</label>
@@ -30,7 +30,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 const model = ref({
-  login: '',
+  name: '',
   email: '',
   password: '',
   role: '',
@@ -42,7 +42,7 @@ async function registrationPostRequest() {
       method: 'POST',
       body: JSON.stringify(
           {
-            login: model.value.login,
+            name: model.value.name,
             email: model.value.email,
             password: model.value.password,
             role: model.value.role,
