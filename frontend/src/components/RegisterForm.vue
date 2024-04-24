@@ -13,15 +13,13 @@
         <label for="password">Введите пароль</label>
         <input type="password" id="password" placeholder="***********" class="register-form__field-label_input" v-model="model.password">
       </div>
-      <div>
-        <select v-model="model.role">
-          <option>Обычный</option>
-          <option>Компания</option>
-        </select>
+      <div class="register-form__field-label">
+        <label for="role">Выберите роль</label>
+          <input type="number" id="number" placeholder="1" class="register-form__field-label_input" v-model="model.role">
       </div>
       <div class="register-form__field-label">
-        <label for="device_name">Введите пароль</label>
-        <input type="text" id="device_name" placeholder="kdvnksj" class="register-form__field-label_input" v-model="model.device_name">
+        <label for="device_name">Введите device</label>
+        <input type="text" id="device_name" placeholder="device" class="register-form__field-label_input" v-model="model.device_name">
       </div>
 
     </div>
@@ -44,7 +42,7 @@ async function registrationPostRequest() {
       method: 'POST',
       body: JSON.stringify(
           {
-            fio: model.value.fio,
+            login: model.value.login,
             email: model.value.email,
             password: model.value.password,
             role: model.value.role,
@@ -59,9 +57,6 @@ async function registrationPostRequest() {
     console.log(error)
   }
 }
-onMounted(() => {
-  registrationPostRequest();
-})
 
 </script>
 

@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import RegisterForm from "@/components/RegisterForm.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -10,8 +9,9 @@ const router = createRouter({
       component: () => import('../pages/RegistrationPage.vue')
     },
     {
-      path: '/register',
-      name: 'about',
+      path: '/',
+      name: 'main',
+      component: () => import('../pages/MainPage.vue')
     }
   ]
 })
