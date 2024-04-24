@@ -66,6 +66,7 @@ async function registrationPostRequest() {
 .register-form {
   width: 400px;
   box-shadow: var(--drop-shadow-base);
+  border: 1px solid var(--border-for-input);
   color: var(--color-for-base-text);
   display: flex;
   flex-direction: column;
@@ -84,15 +85,14 @@ async function registrationPostRequest() {
         width: 250px;
         height: 25px;
         padding: 0 5px;
-        border: 1px solid var(--color-for-inactive-text);
-
+        border: 1px solid var(--border-for-input);
       }
     }
   }
   &__send {
     width: 150px;
     height: 30px;
-    background-color: #ffb8c6;
+    background-color: var(--background-for-button);
     border: none;
   }
 }
