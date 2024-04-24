@@ -59,6 +59,7 @@ import HeaderComponent from "@/components/HeaderComponent.vue";
     height: 40px;
     background-color: var(--background-for-button);
     border: none;
+    color: var(--color-for-button);
   }
 }
 </style>

@@ -23,12 +23,14 @@
       </div>
 
     </div>
-    <button class="register-form__send" @click="registrationPostRequest">Отправить</button>
+    <router-link to="/"><button class="register-form__send" @click="registrationPostRequest">Зарегистрироваться</button></router-link>
   </form>
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
+import {ref} from "vue";
+import {useCookies} from "vue3-cookies";
+const { cookies } = useCookies();
 const model = ref({
   name: '',
   email: '',
@@ -36,6 +38,8 @@ const model = ref({
   role: '',
   device_name: ''
 })
+
+const token = ref('')
 async function registrationPostRequest() {
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
@@ -53,6 +57,11 @@ async function registrationPostRequest() {
         'Content-Type': 'application/json'
       },
     });
+    const data = await response.json()
+    console.log(data)
+    token.value = data
+
+    cookies.set('authData', data);
   } catch (error) {
     console.log(error)
   }
@@ -94,6 +103,7 @@ async function registrationPostRequest() {
     height: 30px;
     background-color: var(--background-for-button);
     border: none;
+    color: var(--color-for-button);
   }
 }
 

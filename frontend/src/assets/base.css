@@ -18,6 +18,7 @@ button {
   font-family: "Nunito", sans-serif;
 }
 :root {
+  --color-for-button: #fe7200;
   --background-main-color: #fbfbfd;
   --background-card-task: #ffffff;
   --color-for-base-text: #1c1e28;
