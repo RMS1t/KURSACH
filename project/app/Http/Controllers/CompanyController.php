@@ -62,9 +62,10 @@ class CompanyController extends Controller
             'number'=>$request->number,
             'company_type'=>$request->company_type,
             'user_id'=>$request->user_id,
+
         ]);
 
-        return response()->noContent();
+        return response()->json([1=> $company]);
     }
 
 
@@ -77,11 +78,9 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        $delItem=Company::find($id);
-
-        $delItem->delete;
+        Company::destroy($id);
 
         return response()->noContent();
     }

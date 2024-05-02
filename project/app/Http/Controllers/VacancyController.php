@@ -77,11 +77,9 @@ class VacancyController extends BaseController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Vacancy $vacancy)
+    public function destroy($id)
     {
-        $delItem=Vacancy::find($vacancy->id);
-
-        $delItem->delete;
+        Vacancy::destroy($id);
 
         return response()->noContent();
     }
