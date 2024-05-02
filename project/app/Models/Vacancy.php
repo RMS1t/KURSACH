@@ -13,6 +13,7 @@ class Vacancy extends Model
         'work_type',
         'description',
         'salary',
+        'tag',
         'required_experience',
         'required_education',
         'company_id',

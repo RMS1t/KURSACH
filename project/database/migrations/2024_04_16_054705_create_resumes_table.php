@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("first_name");
             $table->string("name");
             $table->string("last_name");
+            $table->string("tags");
             $table->boolean("gender");
             $table->string("resident_address");
             $table->date('birthdate');
