@@ -48,7 +48,7 @@ class CompanyController extends Controller
             'description'=>['required', 'string', 'max:255'],
             'inn'=>['required', 'numeric', ],
             'kpp'=>['required', 'numeric', ],
-            'number'['required', 'numeric', ],
+            'number'=>['required', 'numeric', ],
             'company_type'=>['required', 'string', 'max:255'],
             'user_id'=>['required',  'numeric',],
         ]);
