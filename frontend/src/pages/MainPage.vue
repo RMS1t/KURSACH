@@ -52,6 +52,7 @@ import HeaderComponent from "@/components/HeaderComponent.vue";
       height: 40px;
       padding-left: $interval-smaller;
       border: 1px solid var(--border-for-input);
+      outline: none;
     }
   }
   &__button {

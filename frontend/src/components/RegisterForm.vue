@@ -14,8 +14,8 @@
         <input type="password" id="password" placeholder="***********" class="register-form__field-label_input" v-model="model.password">
       </div>
       <div class="register-form__field-label">
-        <label for="role">Выберите роль</label>
-          <input type="number" id="number" placeholder="1" class="register-form__field-label_input" v-model="model.role">
+        <label for="role">Введите роль</label>
+        <input type="number" id="role" placeholder="1" class="register-form__field-label_input" v-model="model.role">
       </div>
       <div class="register-form__field-label">
         <label for="device_name">Введите device</label>
@@ -30,6 +30,7 @@
 <script setup>
 import {ref} from "vue";
 import {useCookies} from "vue3-cookies";
+
 const { cookies } = useCookies();
 const model = ref({
   name: '',
@@ -95,6 +96,7 @@ async function registrationPostRequest() {
         height: 25px;
         padding: 0 5px;
         border: 1px solid var(--border-for-input);
+        outline: none;
       }
     }
   }

@@ -9,6 +9,14 @@
         <label for="password">Введите пароль</label>
         <input type="password" id="password" placeholder="***********" class="auth-form__field-label_input" v-model="model.password">
       </div>
+      <div class="auth-form__field-label">
+        <label for="email">Введите пароль</label>
+        <input type="email" id="email" placeholder="example@gmail.com" class="auth-form__field-label_input" v-model="model.email">
+      </div>
+      <div class="auth-form__field-label">
+        <label for="device">Введите device</label>
+        <input type="text" id="device" placeholder="device" class="auth-form__field-label_input" v-model="model.device_name">
+      </div>
     </div>
     <button class="auth-form__send" @click="registrationPostRequest">Отправить</button>
   </form>
@@ -17,13 +25,18 @@
 <script setup>
 
 import {onMounted, ref} from "vue";
+import {useCookies} from "vue3-cookies";
+
+const { cookies } = useCookies();
 const model = ref({
   name: '',
   password: '',
   email: '',
-  role: '',
   device_name: ''
 })
+
+const token = ref('')
+
 async function registrationPostRequest() {
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/auth`, {
@@ -32,12 +45,19 @@ async function registrationPostRequest() {
           {
             name: model.value.name,
             password: model.value.password,
+            email:model.value.email,
+            device_name: model.value.device_name
           }
       ),
       headers: {
         'Content-Type': 'application/json',
       },
     });
+    const data = await response.json()
+    console.log(data)
+    token.value = data
+
+    cookies.set('authData', data);
   } catch (error) {
     console.log(error)
   }
@@ -71,6 +91,7 @@ async function registrationPostRequest() {
         height: 25px;
         padding: 0 5px;
         border: 1px solid var(--border-for-input);
+        outline: none;
       }
     }
   }
