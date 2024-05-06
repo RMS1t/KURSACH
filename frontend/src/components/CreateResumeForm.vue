@@ -30,7 +30,7 @@
       </div>
       <div class="create-resume-form__field-label">
         <label for="birthday">Введите вашу дату рождения</label>
-        <input type="date" id="birthday" placeholder="гггг-дд-мм" class="create-resume-form__field-label_input" v-model="model.birthday">
+        <input type="date" id="birthday" placeholder="гггг-дд-мм" class="create-resume-form__field-label_input" v-model="model.birthdate">
       </div>
       <div class="create-resume-form__field-label">
         <label for="citizenship">Гражданство</label>
@@ -60,7 +60,7 @@ const model = ref({
   gender: '',
   resident_address: '',
   tags: '',
-  birthday: '',
+  birthdate: '',
   citizenship: '',
   work_permission: '',
   user_id: ''
@@ -88,7 +88,7 @@ async function createResumePostRequest() {
             gender: model.value.gender,
             resident_address: model.value.resident_address,
             tags: model.value.tags,
-            birthday: model.value.birthday,
+            birthdate: model.value.birthdate,
             citizenship: model.value.citizenship,
             work_permission: model.value.work_permission,
             user_id: model.value.user_id

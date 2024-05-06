@@ -12,7 +12,7 @@
         </div>
         <div class="company-create-form__field-label">
           <label for="description">Описание</label>
-          <textarea placeholder="Наша компания представляетиз себя" id="description" v-model="model.description" class="company-create-from__field-label_input"></textarea>
+          <input type="text" placeholder="Наша компания представляетиз себя" id="description" v-model="model.description" class="company-create-from__field-label_input"></input>
         </div>
         <div class="company-create-form__field-label">
           <label for="inn">ИНН</label>
@@ -32,11 +32,11 @@
         </div>
         <div class="company-create-form__field-label">
           <label for="type">Введите вид компании</label>
-          <input type="text" placeholder="tagstagstags" id="type" v-model="model.type" class="company-create-from__field-label_input">
+          <input type="text" placeholder="tagstagstags" id="type" v-model="model.company_type" class="company-create-from__field-label_input">
         </div>
         <div class="company-create-form__field-label">
           <label for="id">Введите id пользователя</label>
-          <input type="number" placeholder="8467843" id="id" v-model="model.id" class="company-create-from__field-label_input">
+          <input type="number" placeholder="8467843" id="id" v-model="model.user_id" class="company-create-from__field-label_input">
         </div>
       </div>
       <router-link to=""><button class="company-create-form__send" @click="createCompanyPostRequest">Создать резюме</button></router-link>
@@ -57,12 +57,13 @@ const model = ref({
   kpp: '',
   tags: '',
   number: '',
-  type: '',
-  id: ''
+  company_type: '',
+  user_id: ''
 })
 
 async function createCompanyPostRequest() {
   const token = cookies.get('authData')
+  console.log(token)
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/company/create`, {
       method: 'POST',
@@ -75,12 +76,11 @@ async function createCompanyPostRequest() {
             kpp: model.value.kpp,
             tags: model.value.tags,
             number: model.value.number,
-            type: model.value.type,
-            id: model.value.id
+            company_type: model.value.company_type,
+            user_id: model.value.user_id
           }
       ),
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       },
     });
