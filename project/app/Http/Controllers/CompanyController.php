@@ -43,14 +43,14 @@ class CompanyController extends Controller
     public function store(StoreCompanyRequest $request)
     {
         $request->validate([
-            'company_name',
-            'address',
-            'description',
-            'inn',
-            'kpp',
-            'number',
-            'company_type',
-            'user_id',
+            'company_name'=>['required', 'string', 'max:255'],
+            'address'=>['required', 'string', 'max:255'],
+            'description'=>['required', 'string', 'max:255'],
+            'inn'=>['required', 'numeric', ],
+            'kpp'=>['required', 'numeric', ],
+            'number'['required', 'numeric', ],
+            'company_type'=>['required', 'string', 'max:255'],
+            'user_id'=>['required',  'numeric',],
         ]);
 
         $company= Company::create([
