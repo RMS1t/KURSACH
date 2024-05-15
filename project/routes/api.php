@@ -20,26 +20,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post("register",[\App\Http\Controllers\ApiAuthController::class,"register"]);
 Route::post("auth",[\App\Http\Controllers\ApiAuthController::class,"token"]);
-Route::post("auth",[\App\Http\Controllers\ApiAuthController::class,"logout"]);
+Route::post("logout",[\App\Http\Controllers\ApiAuthController::class,"logout"]);
 //Route::post("register",[\App\Http\Controllers\Auth\RegisteredUserController::class,"store"]);
 //Route::post("auth",[\App\Http\Controllers\Auth\AuthenticatedSessionController::class,"store"]);
-Route::middleware('auth:sanctum')->post('resume/create',[\App\Http\Controllers\ResumeController::class,'store']);
-Route::middleware('auth:sanctum')->post('company/create',[\App\Http\Controllers\CompanyController::class,'store']);
+Route::post('resume/create',[\App\Http\Controllers\ResumeController::class,'store']);
+Route::post('company/create',[\App\Http\Controllers\CompanyController::class,'store']);
 
-
-Route::middleware('auth:sanctum')->post('resume/delete/{id}',[\App\Http\Controllers\ResumeController::class,'destroy']);
-Route::middleware('auth:sanctum')->post('company/delete/{id}',[\App\Http\Controllers\CompanyController::class,'destroy']);
+Route::post('resume/delete/{id}',[\App\Http\Controllers\ResumeController::class,'destroy']);
+Route::post('resume/delete/{id}',[\App\Http\Controllers\ResumeController::class,'destroy']);
+Route::post('company/delete/{id}',[\App\Http\Controllers\CompanyController::class,'destroy']);
 
 Route::get('resume/{id}',[\App\Http\Controllers\ResumeController::class,'show']);
 Route::get('company/{id}',[\App\Http\Controllers\CompanyController::class,'show']);
+Route::get('vacancy/{id}',[\App\Http\Controllers\VacancyController::class,'show']);
 
 Route::get('resume',[\App\Http\Controllers\ResumeController::class,'index']);
 Route::get('company',[\App\Http\Controllers\CompanyController::class,'index']);
-
+Route::get('vacancy',[\App\Http\Controllers\VacancyController::class,'index']);
 
 Route::get('resume/tag-find/{tag:slug}',[\App\Http\Controllers\ResumeController::class,'findByTag']);
-Route::get('company/tag-find/{tag:slug}',[\App\Http\Controllers\CompanyController::class,'findByTag']);
-
-Route::get('resume/tag-find/{substr:slug}',[\App\Http\Controllers\ResumeController::class,'findResume']);
-Route::get('company/tag-find/{substr:slug}',[\App\Http\Controllers\CompanyController::class,'findResume']);
+Route::get('resume/find/{substr:slug}',[\App\Http\Controllers\ResumeController::class,'findResume']);
+Route::get('company/find/{substr:slug}',[\App\Http\Controllers\CompanyController::class,'findResume']);
 

@@ -1,20 +1,20 @@
 <template>
- <div class="container">
-   <header-component/>
-   <div class="register-page">
-     <h2 class="register-page__title">Регистрация</h2>
-     <register-form/>
-   </div>
- </div>
+  <div class="container">
+    <header-component/>
+    <div class="auth-page">
+      <h2 class="auth-page__title">Авторизация</h2>
+      <auth-form/>
+    </div>
+  </div>
 </template>
 <script setup>
-import RegisterForm from "@/components/RegisterForm.vue";
 import HeaderComponent from "@/components/HeaderComponent.vue";
+import AuthForm from "@/components/AuthForm.vue";
 </script>
 <style lang="scss">
 @import "../assets/app";
 @import "../assets/base.css";
-.register-page {
+.auth-page {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,7 +22,7 @@ import HeaderComponent from "@/components/HeaderComponent.vue";
   gap: $interval-mid;
   &__title {
     color: var(--color-for-base-text);
-    font-size: $interval-x-large;
+    font-size: $interval-xx-large;
     font-family: "Quicksand", sans-serif;
   }
 }

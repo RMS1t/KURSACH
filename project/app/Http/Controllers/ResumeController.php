@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreResumeRequest;
 use App\Http\Requests\UpdateResumeRequest;
 use App\Models\Resume;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 
 class ResumeController extends BaseController
 {
@@ -20,9 +22,22 @@ class ResumeController extends BaseController
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function findResume($substr)
     {
+        $referense= "%".$substr."%";
+        $findData=  DB::table('resumes')->whereAll([
+            'name',
+            'tag',
+        ], 'LIKE', $referense);
+        return  response()->json($data = $findData);
+    }
+    public function findByTag($tag)
+    {
+        $referense= "%".$tag."%";
 
+        $tagData=  DB::table('resumes')->whereAll(
+            ['tag',], 'LIKE', $referense);
+        return  response()->json($data = $tagData);
     }
 
     /**
@@ -39,7 +54,8 @@ class ResumeController extends BaseController
             'citizenship'=>['required', 'string', 'max:255'],
             "work_permission"=>['required', 'string', 'max:255'],
             'user_id'=>['required'],
-            "gender"=>["required","boolean"]
+            "gender"=>["required","boolean"],
+            "tags"=>["required","string"]
         ]);
         $resume=Resume::create([
             "first_name"=>$request->first_name,
@@ -50,7 +66,8 @@ class ResumeController extends BaseController
             'citizenship'=>$request->citizenship,
             "work_permission"=>$request->work_permission,
             'user_id'=>$request->user_id,
-            "gender"=>$request->gender
+            "gender"=>$request->gender,
+            "tags"=>$request->tags,
         ]);
         return response()->json([1=> $resume]);
     }
@@ -82,11 +99,9 @@ class ResumeController extends BaseController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Resume $resume)
+    public function destroy($id)
     {
-        $delItem=Resume::find($resume->id);
-
-        $delItem->delete;
+        Resume::destroy($id);
 
         return response()->noContent();
     }
