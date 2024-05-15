@@ -1,7 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-body {
-  font-family: "Nunito", sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+/*body {*/
+/*  font-family: "Quicksand", sans-serif;*/
+/*  font-style: normal;*/
+/*}*/
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 .container {
   padding-top: 20px;
   max-width: 1440px;
@@ -33,11 +35,11 @@ button {
   --background-for-tags: rgba(155, 93, 255, 0.5);
   --background-option: #f3f3f9;
   --background-base-for-item: rgba(182, 141, 141, 0.5);
-  --drop-shadow-for-item: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
+  --drop-shadow-for-item: 9px 11px 13px 0px #00000040;
   --background-for-button: #ffeecb;
-  --text-disabled: #979797;
-  --text-default: #2D2D2D;
+  --text-disabled: #686868;
+  --text-default: #1B1B1B;
   --text-condition: #616161;
   --drop-shadow-base: -4px 0px 33px 3px rgba(0,0,0,0.1);
-  --border-for-input: #CAD1E1;
+  --border-for-input: #B7B7B7;
 }

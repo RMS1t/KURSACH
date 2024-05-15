@@ -23,6 +23,7 @@ import AuthForm from "@/components/AuthForm.vue";
   &__title {
     color: var(--color-for-base-text);
     font-size: $interval-xx-large;
+    font-family: "Quicksand", sans-serif;
   }
 }
 </style>

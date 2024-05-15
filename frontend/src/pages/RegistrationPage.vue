@@ -22,7 +22,8 @@ import HeaderComponent from "@/components/HeaderComponent.vue";
   gap: $interval-mid;
   &__title {
     color: var(--color-for-base-text);
-    font-size: $interval-xx-large;
+    font-size: $interval-x-large;
+    font-family: "Quicksand", sans-serif;
   }
 }
 </style>

@@ -111,8 +111,6 @@ async function createResumePostRequest() {
 @import "./../assets/app";
 .create-resume-form {
   width: 400px;
-  box-shadow: var(--drop-shadow-base);
-  border: 1px solid var(--border-for-input);
   color: var(--color-for-base-text);
   display: flex;
   flex-direction: column;

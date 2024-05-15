@@ -3,43 +3,43 @@
     <form class="company-create-form">
       <div class="company-create-form__field">
         <div class="company-create-form__field-label">
-          <label for="name">Введите название компании</label>
-          <input type="text" placeholder="Спутник" id="name" v-model="model.company_name" class="company-create-from__input">
+          <label for="name" class="company-create-form__label">Введите название компании</label>
+          <input type="text" placeholder="Спутник" id="name" v-model="model.company_name" class="company-create-form__input">
         </div>
         <div class="company-create-form__field-label">
-          <label for="address">Адрес</label>
-          <input type="text" placeholder="Котовского 6" id="address" v-model="model.address" class="company-create-from__field-label_input">
+          <label for="address" class="company-create-form__label">Адрес</label>
+          <input type="text" placeholder="Котовского 6" id="address" v-model="model.address" class="company-create-form__input">
         </div>
         <div class="company-create-form__field-label">
-          <label for="description">Описание</label>
-          <input type="text" placeholder="Наша компания представляетиз себя" id="description" v-model="model.description" class="company-create-from__field-label_input"></input>
+          <label for="description" class="company-create-form__label">Описание</label>
+          <input type="text" placeholder="Наша компания представляетиз себя" id="description" v-model="model.description" class="company-create-form__input"></input>
         </div>
         <div class="company-create-form__field-label">
-          <label for="inn">ИНН</label>
-          <input type="number" placeholder="000000000000" id="inn" v-model="model.inn" class="company-create-from__field-label_input">
+          <label for="inn" class="company-create-form__label">ИНН</label>
+          <input type="number" placeholder="000000000000" id="inn" v-model="model.inn" class="company-create-form__input">
         </div>
         <div class="company-create-form__field-label">
-          <label for="kpp">КПП</label>
-          <input type="number" placeholder="8467843" id="kpp" v-model="model.kpp" class="company-create-from__field-label_input">
+          <label for="kpp" class="company-create-form__label">КПП</label>
+          <input type="number" placeholder="8467843" id="kpp" v-model="model.kpp" class="company-create-form__input">
         </div>
         <div class="company-create-form__field-label">
-          <label for="tags">Тэги</label>
-          <input type="text" placeholder="tagstagstags" id="tags" v-model="model.tags" class="company-create-from__field-label_input">
+          <label for="tags" class="company-create-form__label">Тэги</label>
+          <input type="text" placeholder="tagstagstags" id="tags" v-model="model.tags" class="company-create-form__input">
         </div>
         <div class="company-create-form__field-label">
-          <label for="number">Номер</label>
-          <input type="number" placeholder="8467843" id="number" v-model="model.number" class="company-create-from__field-label_input">
+          <label for="number" class="company-create-form__label">Номер</label>
+          <input type="number" placeholder="8467843" id="number" v-model="model.number" class="company-create-form__input">
         </div>
         <div class="company-create-form__field-label">
-          <label for="type">Введите вид компании</label>
-          <input type="text" placeholder="tagstagstags" id="type" v-model="model.company_type" class="company-create-from__field-label_input">
+          <label for="type" class="company-create-form__label">Введите вид компании</label>
+          <input type="text" placeholder="tagstagstags" id="type" v-model="model.company_type" class="company-create-form__input">
         </div>
         <div class="company-create-form__field-label">
-          <label for="id">Введите id пользователя</label>
-          <input type="number" placeholder="8467843" id="id" v-model="model.user_id" class="company-create-from__field-label_input">
+          <label for="id" class="company-create-form__label">Введите id пользователя</label>
+          <input type="number" placeholder="8467843" id="id" v-model="model.user_id" class="company-create-form__input">
         </div>
       </div>
-      <router-link to=""><button class="company-create-form__send" @click="createCompanyPostRequest">Создать резюме</button></router-link>
+      <router-link to="/company"><button class="company-create-form__send" @click="createCompanyPostRequest">Создать компанию</button></router-link>
     </form>
   </div>
 </template>
@@ -63,7 +63,6 @@ const model = ref({
 
 async function createCompanyPostRequest() {
   const token = cookies.get('authData')
-  console.log(token)
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/company/create`, {
       method: 'POST',
@@ -98,8 +97,6 @@ async function createCompanyPostRequest() {
 @import "./../assets/app";
 .company-create-form {
   width: 400px;
-  box-shadow: var(--drop-shadow-base);
-  border: 1px solid var(--border-for-input);
   color: var(--color-for-base-text);
   display: flex;
   flex-direction: column;
@@ -109,26 +106,43 @@ async function createCompanyPostRequest() {
   &__field {
     display: flex;
     flex-direction: column;
-    gap: $interval-smaller;
+    gap: $interval-base;
     &-label {
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: $interval-very-small;
-      &_input {
-        width: 250px;
-        height: 25px;
-        padding: 0 5px;
-        border: 1px solid var(--border-for-input);
-        outline: none;
-      }
     }
   }
+  &__input {
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    width: 350px;
+    height: 35px;
+    padding: $interval-smaller;
+    border: 1px solid var(--border-for-input);
+    outline: none;
+    border-radius: 6px;
+  }
+  &__label {
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    position: absolute;
+    bottom: 26px;
+    margin-left: $interval-mid;
+    background-color: white;
+
+  }
   &__send {
-    width: 150px;
-    height: 30px;
-    background-color: var(--background-for-button);
+    width: 350px;
+    height: 35px;
+    background-color: var(--color-for-button);
     border: none;
-    color: var(--color-for-button);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
   }
 }
 </style>

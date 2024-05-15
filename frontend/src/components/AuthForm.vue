@@ -2,23 +2,31 @@
   <form class="auth-form" @submit.prevent>
     <div class="auth-form__field">
       <div class="auth-form__field-label">
-        <label for="patronymic">Введите логин</label>
+        <label for="patronymic" class="auth-form__label">Введите логин</label>
         <input type="text" id="patronymic" placeholder="retmix" class="auth-form__field-label_input" v-model="model.name">
       </div>
       <div class="auth-form__field-label">
-        <label for="password">Введите пароль</label>
+        <label for="password" class="auth-form__label">Введите пароль</label>
         <input type="password" id="password" placeholder="***********" class="auth-form__field-label_input" v-model="model.password">
       </div>
       <div class="auth-form__field-label">
-        <label for="email">Введите пароль</label>
+        <label for="email" class="auth-form__label">Введите пароль</label>
         <input type="email" id="email" placeholder="example@gmail.com" class="auth-form__field-label_input" v-model="model.email">
       </div>
       <div class="auth-form__field-label">
-        <label for="device">Введите device</label>
+        <label for="device" class="auth-form__label">Введите device</label>
         <input type="text" id="device" placeholder="device" class="auth-form__field-label_input" v-model="model.device_name">
       </div>
     </div>
-    <button class="auth-form__send" @click="registrationPostRequest">Отправить</button>
+    <router-link to="/">
+      <button class="auth-form__send" @click="registrationPostRequest">Отправить</button>
+    </router-link>
+    <div class="auth-form__registration">
+      <p>Ещё нет аккаунта?</p>
+      <router-link to="/register" class="auth-form__link">
+        <p>Зарегистрироваться</p>
+      </router-link>
+    </div>
   </form>
 </template>
 
@@ -69,37 +77,62 @@ async function registrationPostRequest() {
 @import "./../assets/base.css";
 @import "./../assets/app";
 .auth-form {
-  width: 400px;
-  box-shadow: var(--drop-shadow-base);
-  border: 1px solid var(--border-for-input);
   color: var(--color-for-base-text);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $interval-base;
+  gap: $interval-mega;
   padding: $interval-base;
   &__field {
     display: flex;
     flex-direction: column;
-    gap: $interval-smaller;
+    gap: $interval-mega;
     &-label {
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: $interval-very-small;
       &_input {
-        width: 250px;
-        height: 25px;
-        padding: 0 5px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 16px;
+        width: 629px;
+        height: 56px;
+        padding: $interval-smaller;
         border: 1px solid var(--border-for-input);
         outline: none;
+        border-radius: 9px;
       }
     }
   }
+  &__label {
+    font-family: "DM Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    position: absolute;
+    bottom: 46px;
+    margin-left: $interval-mid;
+    background-color: white;
+
+  }
   &__send {
-    width: 150px;
-    height: 30px;
-    background-color: var(--background-for-button);
+    width: 629px;
+    height: 56px;
+    background-color: var(--color-for-button);
     border: none;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 9px;
+  }
+  &__registration {
+    font-family: "DM Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    gap: 2px;
+  }
+  &__link {
+    text-decoration: none;
     color: var(--color-for-button);
   }
 }
