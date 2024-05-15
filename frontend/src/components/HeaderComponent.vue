@@ -3,11 +3,11 @@
     <div class="main-page__header">
       <nav class="main-page__navigation">
         <router-link to="/" class="main-page__navigation__item">Главная</router-link>
-        <router-link to="/view_vacancies" class="main-page__navigation__item" v-if="!authCookieValue">Вакансии</router-link>
+        <router-link to="vacancy" class="main-page__navigation__item">Вакансии</router-link>
         <router-link to="/company" class="main-page__navigation__item" v-if="authCookieValue">Компании</router-link>
         <router-link to="/register" class="main-page__navigation__item" v-if="!authCookieValue">Регистрация</router-link>
         <router-link to="/auth" class="main-page__navigation__item" v-if="!authCookieValue">Вход</router-link>
-        <router-link to="/resume" class="main-page__navigation__item" v-if="authCookieValue">Создать резюме</router-link>
+        <router-link to="/resume" class="main-page__navigation__item" v-if="authCookieValue">Резюме</router-link>
         <router-link to="/" class="main-page__navigation__item" v-if="authCookieValue" @click="deleteCookie">Выход</router-link>
       </nav>
 

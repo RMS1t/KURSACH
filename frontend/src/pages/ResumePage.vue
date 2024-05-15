@@ -3,7 +3,7 @@
     <header-component/>
     <div class="resume-page">
       <h2 class="resume-page__title">Резюме</h2>
-      <desktop-modal :isOpen="modalIsOpen" @toggleModal="toggleModal">
+      <desktop-modal>
         <template v-slot:open>
           Открыть
         </template>
@@ -12,21 +12,16 @@
           <create-resume-form/>
         </template>
       </desktop-modal>
+      <get-resume/>
     </div>
   </div>
 </template>
 <script setup>
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import CreateResumeForm from "@/components/CreateResumeForm.vue";
-import CompanyCreateForm from "@/components/CompanyCreateForm.vue";
 import DesktopModal from "@/components/DesktopModal.vue";
-import {ref} from "vue";
+import GetResume from "@/components/GetResume.vue";
 
-let modalIsOpen = ref(false);
-
-const toggleModal = () => {
-  modalIsOpen.value = !modalIsOpen.value;
-};
 </script>
 <style lang="scss">
 @import "../assets/app";

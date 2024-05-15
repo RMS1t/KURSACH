@@ -10,7 +10,7 @@
         <input type="password" id="password" placeholder="***********" class="auth-form__field-label_input" v-model="model.password">
       </div>
       <div class="auth-form__field-label">
-        <label for="email" class="auth-form__label">Введите пароль</label>
+        <label for="email" class="auth-form__label">Введите почту</label>
         <input type="email" id="email" placeholder="example@gmail.com" class="auth-form__field-label_input" v-model="model.email">
       </div>
       <div class="auth-form__field-label">
