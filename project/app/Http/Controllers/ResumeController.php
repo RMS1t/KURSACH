@@ -53,7 +53,6 @@ class ResumeController extends BaseController
             'birthdate'=>['required','date'],
             'citizenship'=>['required', 'string', 'max:255'],
             "work_permission"=>['required', 'string', 'max:255'],
-            'user_id'=>['required'],
             "gender"=>["required","boolean"],
             "tags"=>["required","string"]
         ]);
@@ -65,7 +64,7 @@ class ResumeController extends BaseController
             'birthdate'=>$request->birthdate,
             'citizenship'=>$request->citizenship,
             "work_permission"=>$request->work_permission,
-            'user_id'=>$request->user_id,
+            'user_id'=>$request->user()->id,
             "gender"=>$request->gender,
             "tags"=>$request->tags,
         ]);
