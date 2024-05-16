@@ -3,12 +3,13 @@
 namespace App\Http\Middleware;
 
 use App\Models\Company;
+use App\Models\Vacancy;
 use Closure;
 use ErrorException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CompanyOwnerMiddleware
+class VacancyOwnerMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,7 +19,8 @@ class CompanyOwnerMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         try {
-            if (($request->user()->role == 1 && $request->user()->id == Company::find($request->id)->user_id) || ($request->user()->role == 2)){
+            $cmp_id = Vacancy::find($request->id)->company_id;
+            if (($request->user()->role == 1 && $request->user()->id == Company::find($cmp_id)->user_id) || ($request->user()->role == 2)){
                 return $next($request);
 
             }
@@ -27,6 +29,5 @@ class CompanyOwnerMiddleware
         catch (ErrorException){
             return response("source not found", 404);
         }
-
     }
 }
