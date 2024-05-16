@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVacancyRequest;
 use App\Http\Requests\UpdateVacancyRequest;
+use App\Models\Company;
 use App\Models\Vacancy;
 use Illuminate\Routing\Controller as BaseController;
 class VacancyController extends BaseController
@@ -16,13 +17,6 @@ class VacancyController extends BaseController
         return  response()->json($data =[Vacancy::all()]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -36,7 +30,6 @@ class VacancyController extends BaseController
             'salary'=>['required'],
             'required_experience'=>['required', 'string', 'max:255'],
             'required_education'=>['required', 'string', 'max:255'],
-            'company_id'=>['required'],
         ]);
 
         $vacancy = Vacancy::create([
@@ -47,10 +40,12 @@ class VacancyController extends BaseController
             'salary'=>$request->salary,
             'required_experience'=>$request->required_experience,
             'required_education'=>$request->required_education,
-            'company_id'=>$request->company_id,
+            'company_id'=>Company::where('user_id', 'like', "{$request->user()->id}")->first()->id,
+
+
         ]);
 
-        return response()->noContent();
+        return response()->json($data =[$vacancy]);
     }
 
     public function show(Vacancy $vacancy)
@@ -58,21 +53,6 @@ class VacancyController extends BaseController
         return  response()->json($data =[Vacancy::find($vacancy->id)]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Vacancy $vacancy)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateVacancyRequest $request, Vacancy $vacancy)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

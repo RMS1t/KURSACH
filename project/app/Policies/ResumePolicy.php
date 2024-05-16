@@ -32,7 +32,7 @@ class ResumePolicy
 
     public function delete(User $user, Resume $resume): bool
     {
-        if (($user->role==1 && $user->id==$resume->user_id) || ($user->role==2)){
+        if (($user->role==0 && $user->id==$resume->user_id) || ($user->role==2)){
             return true;
         }
         else{
