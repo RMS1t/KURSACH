@@ -27,9 +27,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('company/delete/{id}',[\App\Http\Controllers\CompanyController::class,'destroy']);
 });
 
-Route::get('resume/{id}',[\App\Http\Controllers\ResumeController::class,'show']);
-Route::get('company/{id}',[\App\Http\Controllers\CompanyController::class,'show']);
-Route::get('vacancy/{id}',[\App\Http\Controllers\VacancyController::class,'show']);
+Route::get('resume/{resume}',[\App\Http\Controllers\ResumeController::class,'show']);
+Route::get('company/{company}',[\App\Http\Controllers\CompanyController::class,'show']);
+Route::get('vacancy/{vacancy}',[\App\Http\Controllers\VacancyController::class,'show']);
 
 Route::get('resume',[\App\Http\Controllers\ResumeController::class,'index']);
 Route::get('company',[\App\Http\Controllers\CompanyController::class,'index']);

@@ -16,8 +16,7 @@ class ApiAuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:3'],
-            "role"=>["required"],
-            'device_name' => ['required', 'string']
+            'role'=>['required']
         ]);
         // 1
         if ($validator->fails()) {
@@ -34,19 +33,18 @@ class ApiAuthController extends Controller
         ]);
         // 3
 
-       $token = $user->createToken($request->device_name)->plainTextToken;
+       $token = $user->createToken(rand())->plainTextToken;
 
 
-        return response()->json(['token' => $token], 200);
+        return response()->json(['token' => $token]);
     }
 
     public function token(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'name' => ['required', 'string'],
+            'email' => ['required', 'string'],
             'password' => ['required', 'string', 'min:3'],
-            'device_name' => ['required', 'string']
         ]);
 
         if ($validator->fails()) {
@@ -62,7 +60,7 @@ class ApiAuthController extends Controller
         }
         // 3
 
-        return response()->json([$user->createToken($request->device_name)->plainTextToken]);
+        return response()->json(['token' => $user->createToken(rand())->plainTextToken]);
         // 4
     }
 

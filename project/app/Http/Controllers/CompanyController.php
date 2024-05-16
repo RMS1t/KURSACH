@@ -13,9 +13,9 @@ class CompanyController extends Controller
     {
         return  response()->json($data =[Company::all()]);
     }
-    public function show($id)
+    public function show(Company $company)
     {
-        return  response()->json($data = Company::find($id));
+        return  response()->json($company);
     }
 
     public function store(StoreCompanyRequest $request)

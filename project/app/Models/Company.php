@@ -20,6 +20,7 @@ class Company extends Model
     ];
     protected $casts = [
         'verified_at' => 'datetime',
+        'id'=>'integer'
     ];
 
     use HasFactory;
