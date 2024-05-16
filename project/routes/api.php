@@ -18,13 +18,22 @@ Route::post("register",[\App\Http\Controllers\ApiAuthController::class,"register
 Route::post("auth",[\App\Http\Controllers\ApiAuthController::class,"token"]);
 Route::post("logout",[\App\Http\Controllers\ApiAuthController::class,"logout"]);
 
-Route::middleware("auth:sanctum")->post('resume/create',[\App\Http\Controllers\ResumeController::class,'store']);
-Route::middleware("auth:sanctum")->post('company/create',[\App\Http\Controllers\CompanyController::class,'store']);
-Route::middleware("auth:sanctum")->post('vacancy/create',[\App\Http\Controllers\VacancyController::class,'store']);
+Route::middleware("auth:sanctum")->group(function ()
+{
+    Route::middleware(\App\Http\Middleware\WorkerMiddleware::class)->post('resume/create',[\App\Http\Controllers\ResumeController::class,'store']);
+    Route::middleware(\App\Http\Middleware\CompanyMiddleware::class)->post('company/create',[\App\Http\Controllers\CompanyController::class,'store']);
+    Route::middleware(\App\Http\Middleware\CompanyMiddleware::class)->post('vacancy/create',[\App\Http\Controllers\VacancyController::class,'store']);
 
-Route::middleware("auth:sanctum")->post('resume/delete/{id}',[\App\Http\Controllers\ResumeController::class,'destroy']);
-Route::middleware("auth:sanctum")->post('vacancy/delete/{id}',[\App\Http\Controllers\VacancyController::class,'destroy']);
-Route::middleware("auth:sanctum")->post('company/delete/{id}',[\App\Http\Controllers\CompanyController::class,'destroy']);
+
+    Route::middleware(\App\Http\Middleware\ResumeOwnerMiddleware::class)->post('resume/delete/{id}',[\App\Http\Controllers\ResumeController::class,'destroy']);
+    Route::middleware(\App\Http\Middleware\CompanyOwnerMiddleware::class)->post('vacancy/delete/{id}',[\App\Http\Controllers\VacancyController::class,'destroy']);
+    Route::middleware(\App\Http\Middleware\CompanyOwnerMiddleware::class)->post('company/delete/{id}',[\App\Http\Controllers\CompanyController::class,'destroy']);
+
+
+}
+);
+
+
 
 Route::get('resume/{id}',[\App\Http\Controllers\ResumeController::class,'show']);
 Route::get('company/{id}',[\App\Http\Controllers\CompanyController::class,'show']);
