@@ -30,9 +30,9 @@ Route::get('resume/{id}',[\App\Http\Controllers\ResumeController::class,'show'])
 Route::get('company/{id}',[\App\Http\Controllers\CompanyController::class,'show']);
 Route::get('vacancy/{id}',[\App\Http\Controllers\VacancyController::class,'show']);
 
-Route::get('resume/all',[\App\Http\Controllers\ResumeController::class,'index']);
-Route::get('company/all',[\App\Http\Controllers\CompanyController::class,'index']);
-Route::get('vacancy/all',[\App\Http\Controllers\VacancyController::class,'index']);
+Route::get('resume',[\App\Http\Controllers\ResumeController::class,'index']);
+Route::get('company',[\App\Http\Controllers\CompanyController::class,'index']);
+Route::get('vacancy',[\App\Http\Controllers\VacancyController::class,'index']);
 
 
 
