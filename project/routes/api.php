@@ -17,22 +17,23 @@ use Illuminate\Support\Facades\Route;
 Route::post("register",[\App\Http\Controllers\ApiAuthController::class,"register"]);
 Route::post("auth",[\App\Http\Controllers\ApiAuthController::class,"token"]);
 Route::post("logout",[\App\Http\Controllers\ApiAuthController::class,"logout"]);
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('resume/create',[\App\Http\Controllers\ResumeController::class,'store']);
+    Route::post('company/create',[\App\Http\Controllers\CompanyController::class,'store']);
+    Route::post('vacancy/create',[\App\Http\Controllers\VacancyController::class,'store']);
 
-Route::middleware("auth:sanctum")->post('resume/create',[\App\Http\Controllers\ResumeController::class,'store']);
-Route::middleware("auth:sanctum")->post('company/create',[\App\Http\Controllers\CompanyController::class,'store']);
-Route::middleware("auth:sanctum")->post('vacancy/create',[\App\Http\Controllers\VacancyController::class,'store']);
-
-Route::middleware("auth:sanctum")->post('resume/delete/{id}',[\App\Http\Controllers\ResumeController::class,'destroy']);
-Route::middleware("auth:sanctum")->post('vacancy/delete/{id}',[\App\Http\Controllers\VacancyController::class,'destroy']);
-Route::middleware("auth:sanctum")->post('company/delete/{id}',[\App\Http\Controllers\CompanyController::class,'destroy']);
+    Route::post('resume/delete/{id}',[\App\Http\Controllers\ResumeController::class,'destroy']);
+    Route::post('vacancy/delete/{id}',[\App\Http\Controllers\VacancyController::class,'destroy']);
+    Route::post('company/delete/{id}',[\App\Http\Controllers\CompanyController::class,'destroy']);
+});
 
 Route::get('resume/{id}',[\App\Http\Controllers\ResumeController::class,'show']);
 Route::get('company/{id}',[\App\Http\Controllers\CompanyController::class,'show']);
 Route::get('vacancy/{id}',[\App\Http\Controllers\VacancyController::class,'show']);
 
-Route::get('resume/all',[\App\Http\Controllers\ResumeController::class,'index']);
-Route::get('company/all',[\App\Http\Controllers\CompanyController::class,'index']);
-Route::get('vacancy/all',[\App\Http\Controllers\VacancyController::class,'index']);
+Route::get('resume',[\App\Http\Controllers\ResumeController::class,'index']);
+Route::get('company',[\App\Http\Controllers\CompanyController::class,'index']);
+Route::get('vacancy',[\App\Http\Controllers\VacancyController::class,'index']);
 
 
 
