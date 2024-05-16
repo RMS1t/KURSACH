@@ -62,7 +62,7 @@ class ApiAuthController extends Controller
         }
         // 3
 
-        return response()->json(['token' => $user->createToken($request->device_name)->plainTextToken]);
+        return response()->json([$user->createToken($request->device_name)->plainTextToken]);
         // 4
     }
 
