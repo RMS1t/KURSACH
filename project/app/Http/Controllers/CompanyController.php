@@ -13,9 +13,9 @@ class CompanyController extends Controller
     {
         return  response()->json($data =[Company::all()]);
     }
-    public function show($id)
+    public function show(Company $company)
     {
-        return  response()->json($data = Company::find($id));
+        return  response()->json($company);
     }
 
     public function store(StoreCompanyRequest $request)
@@ -29,20 +29,26 @@ class CompanyController extends Controller
             'number'=>['required', 'numeric', ],
             'company_type'=>['required', 'string', 'max:255'],
         ]);
+        try {
+            $company = Company::where('user_id', $request->user()->id)->first()->id;
+            return response("У вас уже есть комания под номером: ". $company);
+        }
+        catch (\ErrorException){
+            $company= Company::create([
+                'company_name'=>$request->company_name,
+                'address'=>$request->address,
+                'description'=>$request->description,
+                'inn'=>$request->inn,
+                'kpp'=>$request->kpp,
+                'number'=>$request->number,
+                'company_type'=>$request->company_type,
+                'user_id'=>$request->user()->id,
 
-        $company= Company::create([
-            'company_name'=>$request->company_name,
-            'address'=>$request->address,
-            'description'=>$request->description,
-            'inn'=>$request->inn,
-            'kpp'=>$request->kpp,
-            'number'=>$request->number,
-            'company_type'=>$request->company_type,
-            'user_id'=>$request->user()->id,
+            ]);
 
-        ]);
+            return response()->json([1=> $company]);
+        }
 
-        return response()->json([1=> $company]);
     }
 
 

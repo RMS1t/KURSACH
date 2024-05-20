@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class WorkerMiddleware
+class EnsureTokenIsValid
 {
     /**
      * Handle an incoming request.
@@ -15,11 +15,6 @@ class WorkerMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-        if (($request->user()->role == 0) || ($request->user()->role == 2)){
-            return $next($request);
-        }
-        return response("yos should be ordinary user" , 403);
-
+        return $next($request);
     }
 }

@@ -14,7 +14,7 @@ class VacancyController extends BaseController
      */
     public function index()
     {
-        return  response()->json($data =[Vacancy::all()]);
+        return  response()->json(Vacancy::all());
     }
 
 
@@ -27,8 +27,8 @@ class VacancyController extends BaseController
             'vac_name'=>['required', 'string', 'max:255'],
             'work_type'=>['required', 'string', 'max:255'],
             'description'=>['required'],
-            'salary'=>['required'],
-            'required_experience'=>['required', 'string', 'max:255'],
+            'salary'=>['required', 'integer'],
+            'required_experience'=>['required', 'integer'],
             'required_education'=>['required', 'string', 'max:255'],
         ]);
 
@@ -40,7 +40,7 @@ class VacancyController extends BaseController
             'salary'=>$request->salary,
             'required_experience'=>$request->required_experience,
             'required_education'=>$request->required_education,
-            'company_id'=>Company::where('user_id', 'like', "{$request->user()->id}")->first()->id,
+            'company_id'=>Company::where('user_id', $request->user()->id)->first()->id,
 
 
         ]);
@@ -50,7 +50,7 @@ class VacancyController extends BaseController
 
     public function show(Vacancy $vacancy)
     {
-        return  response()->json($data =[Vacancy::find($vacancy->id)]);
+        return  response()->json($data =[$vacancy]);
     }
 
 

@@ -17,12 +17,12 @@ services:
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
     volumes:
       - ../project:/project
-    environment:
+ #   environment:
 
-      PHP_IDE_CONFIG: ${PHP_IDE_CONFIG:-serverName=docker}
-      XDEBUG_MODE: ${XDEBUG_MODE:-yes}
-      XDEBUG_CONFIG: "client_host=host.docker.internal"
-      XDEBUG_TRIGGER: 'yes'
+  #    PHP_IDE_CONFIG: ${PHP_IDE_CONFIG:-serverName=docker}
+   #   XDEBUG_MODE: ${XDEBUG_MODE:-yes}
+   #   XDEBUG_CONFIG: "client_host=host.docker.internal"
+   #   XDEBUG_TRIGGER: 'yes'
 
 
 
