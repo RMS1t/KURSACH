@@ -1,5 +1,5 @@
 <template>
-  <form class="create-resume-form" @submit.prevent>
+  <form class="create-resume-form" @submit.prevent v-if="isJobSeeker">
     <div class="create-resume-form__field">
       <div class="create-resume-form__field-label">
         <label for="name" class="create-resume-form__label">Введите ваше имя</label>
@@ -47,11 +47,21 @@
     </div>
     <router-link to=""><button class="create-resume-form__send" @click="createResumePostRequest">Создать резюме</button></router-link>
   </form>
+  <div v-else>
+    Ваша роль не позволяет вам создать резюме
+  </div>
 </template>
 <script setup>
 import {useCookies} from "vue3-cookies";
 const { cookies } = useCookies();
 import {ref} from "vue";
+import { useUserStore } from "@/store/userStore.js";
+import {computed} from "vue";
+
+const userStore = useUserStore();
+
+const isJobSeeker = computed(() => userStore.isJobSeeker);
+
 
 const model = ref({
   first_name: '',

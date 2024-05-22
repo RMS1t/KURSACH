@@ -5,7 +5,7 @@
       <h2 class="resume-page__title">Резюме</h2>
       <desktop-modal>
         <template v-slot:open>
-          Открыть
+          Создать
         </template>
         <template v-slot:title>Добавление своей компании</template>
         <template v-slot:content>

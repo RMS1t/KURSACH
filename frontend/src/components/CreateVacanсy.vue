@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form class="create-vacancy">
+    <form class="create-vacancy" v-if="isEmployer">
       <div class="create-vacancy__field">
         <div class="create-vacancy__field-label">
           <label for="name" class="create-vacancy__label">Введите название компании</label>
@@ -41,6 +41,9 @@
       </div>
       <router-link to="/company"><button class="create-vacancy__send" @click="createCompanyPostRequest">Создать компанию</button></router-link>
     </form>
+    <div v-else>
+      Ваша роль не позволяет вам создать вакансию
+    </div>
   </div>
 </template>
 
@@ -48,6 +51,12 @@
 import {useCookies} from "vue3-cookies";
 const { cookies } = useCookies();
 import {ref} from "vue";
+import { useUserStore } from "@/store/userStore.js";
+import {computed} from "vue";
+
+const userStore = useUserStore();
+
+const isEmployer = computed(() => userStore.isEmployer);
 
 const model = ref({
   company_name: '',
