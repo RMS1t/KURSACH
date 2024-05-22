@@ -5,7 +5,7 @@
       <h2 class="company-create-page__title">Создание компании</h2>
       <desktop-modal>
         <template v-slot:open>
-          Открыть
+          Создать
         </template>
         <template v-slot:title>Добавление своей компании</template>
         <template v-slot:content>

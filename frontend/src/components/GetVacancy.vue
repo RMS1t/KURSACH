@@ -26,7 +26,7 @@ const vacanciesLoaded = ref(false);
 async function getResumes() {
   const response = await fetch(`${import.meta.env.VITE_API_URL}/vacancy`)
   const data = await response.json()
-  vacancies.value = data[0]
+  vacancies.value = data
   vacanciesLoaded.value = true
 }
 onMounted(() => {

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <form class="create-vacancy">
-      <div class="company-create-form__field">
+      <div class="create-vacancy__field">
         <div class="create-vacancy__field-label">
           <label for="name" class="create-vacancy__label">Введите название компании</label>
           <input type="text" placeholder="Спутник" id="name" v-model="model.company_name" class="create-vacancy__input">
@@ -80,7 +80,7 @@ async function createCompanyPostRequest() {
           }
       ),
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token.token}`
       },
     });
     const data = await response.json()

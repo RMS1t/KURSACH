@@ -15,7 +15,7 @@
       </div>
       <div class="create-resume-form__field-label">
         <label for="gender">Ваш пол</label>
-        <select v-model="model.gender" @click="setGender">
+        <select v-model="model.gender" @click="setGender" class="create-resume-form__select">
           <option value="female">Женщина</option>
           <option value="male">Мужина</option>
         </select>
@@ -95,7 +95,7 @@ async function createResumePostRequest() {
           }
       ),
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token.token}`
       },
     });
     const data = await response.json();
@@ -137,6 +137,19 @@ async function createResumePostRequest() {
     border: 1px solid var(--border-for-input);
     outline: none;
     border-radius: 6px;
+  }
+  &__select {
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    width: 350px;
+    height: 35px;
+    padding: $interval-smaller;
+    border: 1px solid var(--border-for-input);
+    outline: none;
+    border-radius: 6px;
+  }
+  &__select option {
+    border-radius: 5px;
   }
   &__label {
     font-family: "DM Sans", sans-serif;

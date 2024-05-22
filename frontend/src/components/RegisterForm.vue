@@ -14,8 +14,11 @@
         <input type="password" id="password" placeholder="***********" class="register-form__field-label_input" v-model="model.password">
       </div>
       <div class="register-form__field-label">
-        <label for="role" class="register-form__label">Введите роль</label>
-        <input type="number" id="role" placeholder="1" class="register-form__field-label_input" v-model="model.role">
+        <label for="gender">Выберите роль</label>
+        <select v-model="model.role" @change="setRole" class="register-form__select">
+          <option>Работодатель</option>
+          <option>Соискатель</option>
+        </select>
       </div>
       <div class="register-form__field-label">
         <label for="device_name" class="register-form__label">Введите device</label>
@@ -35,7 +38,9 @@
 <script setup>
 import {ref} from "vue";
 import {useCookies} from "vue3-cookies";
+import {useUserStore} from "@/store/userStore.js";
 
+const userStore = useUserStore();
 const { cookies } = useCookies();
 const model = ref({
   name: '',
@@ -44,6 +49,19 @@ const model = ref({
   role: '',
   device_name: ''
 })
+
+
+let setRole = () => {
+  if(model.value.role === "Работодатель") {
+    model.value.role = 1;
+  } else if(model.value.role === "Соискатель") {
+    model.value.role = 2;
+  }
+  userStore.setRole(model.value.role);
+  cookies.set('userRole', model.value.role)
+}
+
+
 
 const token = ref('')
 async function registrationPostRequest() {
@@ -105,6 +123,16 @@ async function registrationPostRequest() {
         border-radius: 9px;
       }
     }
+  }
+  &__select {
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    width: 350px;
+    height: 35px;
+    padding: $interval-smaller;
+    border: 1px solid var(--border-for-input);
+    outline: none;
+    border-radius: 6px;
   }
   &__label {
     font-family: "DM Sans", sans-serif;

@@ -31,7 +31,7 @@ const resumesLoaded = ref(false);
 async function getResumes() {
   const response = await fetch(`${import.meta.env.VITE_API_URL}/resume`)
   const data = await response.json()
-  resumes.value = data[0]
+  resumes.value = data
   resumesLoaded.value = true
 }
 onMounted(() => {

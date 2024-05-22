@@ -80,11 +80,12 @@ async function createCompanyPostRequest() {
           }
       ),
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token.token}`
       },
     });
     const data = await response.json()
     console.log(data)
+
 
   } catch (error) {
     console.log(error)
