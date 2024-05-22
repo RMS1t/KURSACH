@@ -10,7 +10,7 @@
         <input type="password" id="password" placeholder="***********" class="auth-form__field-label_input" v-model="model.password">
       </div>
       <div class="auth-form__field-label">
-        <label for="email" class="auth-form__label">Введите пароль</label>
+        <label for="email" class="auth-form__label">Введите почту</label>
         <input type="email" id="email" placeholder="example@gmail.com" class="auth-form__field-label_input" v-model="model.email">
       </div>
       <div class="auth-form__field-label">
@@ -19,7 +19,7 @@
       </div>
     </div>
     <router-link to="/">
-      <button class="auth-form__send" @click="registrationPostRequest">Отправить</button>
+      <button class="auth-form__send" @click="authPostRequest">Отправить</button>
     </router-link>
     <div class="auth-form__registration">
       <p>Ещё нет аккаунта?</p>
@@ -34,6 +34,9 @@
 
 import {onMounted, ref} from "vue";
 import {useCookies} from "vue3-cookies";
+import { useUserStore } from "@/store/userStore.js";
+
+const userStore = useUserStore();
 
 const { cookies } = useCookies();
 const model = ref({
@@ -45,7 +48,7 @@ const model = ref({
 
 const token = ref('')
 
-async function registrationPostRequest() {
+async function authPostRequest() {
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/auth`, {
       method: 'POST',
@@ -62,10 +65,13 @@ async function registrationPostRequest() {
       },
     });
     const data = await response.json()
-    console.log(data)
     token.value = data
 
     cookies.set('authData', data);
+
+    const savedAuthData = cookies.get('userRole');
+    userStore.setRole(savedAuthData)
+
   } catch (error) {
     console.log(error)
   }

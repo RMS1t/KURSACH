@@ -14,31 +14,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post("register",[\App\Http\Controllers\ApiAuthController::class,"register"]);
 Route::post("auth",[\App\Http\Controllers\ApiAuthController::class,"token"]);
-Route::post("logout",[\App\Http\Controllers\ApiAuthController::class,"logout"]);
-//Route::post("register",[\App\Http\Controllers\Auth\RegisteredUserController::class,"store"]);
-//Route::post("auth",[\App\Http\Controllers\Auth\AuthenticatedSessionController::class,"store"]);
-Route::post('resume/create',[\App\Http\Controllers\ResumeController::class,'store']);
-Route::post('company/create',[\App\Http\Controllers\CompanyController::class,'store']);
 
-Route::post('resume/delete/{id}',[\App\Http\Controllers\ResumeController::class,'destroy']);
-Route::post('resume/delete/{id}',[\App\Http\Controllers\ResumeController::class,'destroy']);
-Route::post('company/delete/{id}',[\App\Http\Controllers\CompanyController::class,'destroy']);
 
-Route::get('resume/{id}',[\App\Http\Controllers\ResumeController::class,'show']);
-Route::get('company/{id}',[\App\Http\Controllers\CompanyController::class,'show']);
-Route::get('vacancy/{id}',[\App\Http\Controllers\VacancyController::class,'show']);
+Route::middleware("auth:sanctum")->group(function ()
+{
+    Route::middleware(\App\Http\Middleware\WorkerMiddleware::class)->post('resume/create',[\App\Http\Controllers\ResumeController::class,'store']);
+    Route::middleware(\App\Http\Middleware\CompanyMiddleware::class)->post('company/create',[\App\Http\Controllers\CompanyController::class,'store']);
+    Route::middleware(\App\Http\Middleware\CompanyMiddleware::class)->post('vacancy/create',[\App\Http\Controllers\VacancyController::class,'store']);
+
+    Route::post("logout",[\App\Http\Controllers\ApiAuthController::class,"logout"]);
+
+    Route::middleware(\App\Http\Middleware\ResumeOwnerMiddleware::class)->post('resume/delete/{id}',[\App\Http\Controllers\ResumeController::class,'destroy']);
+    Route::middleware(\App\Http\Middleware\VacancyOwnerMiddleware::class)->post('vacancy/delete/{id}',[\App\Http\Controllers\VacancyController::class,'destroy']);
+    Route::middleware(\App\Http\Middleware\CompanyOwnerMiddleware::class)->post('company/delete/{id}',[\App\Http\Controllers\CompanyController::class,'destroy']);
+
+
+}
+);
+
+
+Route::get('resume/{resume}',[\App\Http\Controllers\ResumeController::class,'show']);
+Route::get('company/{company}',[\App\Http\Controllers\CompanyController::class,'show']);
+Route::get('vacancy/{vacancy}',[\App\Http\Controllers\VacancyController::class,'show']);
 
 Route::get('resume',[\App\Http\Controllers\ResumeController::class,'index']);
 Route::get('company',[\App\Http\Controllers\CompanyController::class,'index']);
 Route::get('vacancy',[\App\Http\Controllers\VacancyController::class,'index']);
-
-Route::get('resume/tag-find/{tag:slug}',[\App\Http\Controllers\ResumeController::class,'findByTag']);
-Route::get('resume/find/{substr:slug}',[\App\Http\Controllers\ResumeController::class,'findResume']);
-Route::get('company/find/{substr:slug}',[\App\Http\Controllers\CompanyController::class,'findResume']);
 

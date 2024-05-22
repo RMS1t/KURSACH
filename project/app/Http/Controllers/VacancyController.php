@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVacancyRequest;
 use App\Http\Requests\UpdateVacancyRequest;
+use App\Models\Company;
 use App\Models\Vacancy;
 use Illuminate\Routing\Controller as BaseController;
 class VacancyController extends BaseController
@@ -13,16 +14,9 @@ class VacancyController extends BaseController
      */
     public function index()
     {
-        return  response()->json($data =[Vacancy::all()]);
+        return  response()->json(Vacancy::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -33,10 +27,9 @@ class VacancyController extends BaseController
             'vac_name'=>['required', 'string', 'max:255'],
             'work_type'=>['required', 'string', 'max:255'],
             'description'=>['required'],
-            'salary'=>['required'],
-            'required_experience'=>['required', 'string', 'max:255'],
+            'salary'=>['required', 'integer'],
+            'required_experience'=>['required', 'integer'],
             'required_education'=>['required', 'string', 'max:255'],
-            'company_id'=>['required'],
         ]);
 
         $vacancy = Vacancy::create([
@@ -47,32 +40,19 @@ class VacancyController extends BaseController
             'salary'=>$request->salary,
             'required_experience'=>$request->required_experience,
             'required_education'=>$request->required_education,
-            'company_id'=>$request->company_id,
+            'company_id'=>Company::where('user_id', $request->user()->id)->first()->id,
+
+
         ]);
 
-        return response()->noContent();
+        return response()->json($data =[$vacancy]);
     }
 
     public function show(Vacancy $vacancy)
     {
-        return  response()->json($data =[Vacancy::find($vacancy->id)]);
+        return  response()->json($data =[$vacancy]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Vacancy $vacancy)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateVacancyRequest $request, Vacancy $vacancy)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form class="company-create-form">
+    <form class="company-create-form" v-if="isEmployer">
       <div class="company-create-form__field">
         <div class="company-create-form__field-label">
           <label for="name" class="company-create-form__label">Введите название компании</label>
@@ -41,6 +41,9 @@
       </div>
       <router-link to="/company"><button class="company-create-form__send" @click="createCompanyPostRequest">Создать компанию</button></router-link>
     </form>
+    <div v-else>
+      Ваша роль не позволяет вам создать вакансию
+    </div>
   </div>
 </template>
 
@@ -48,6 +51,12 @@
 import {useCookies} from "vue3-cookies";
 const { cookies } = useCookies();
 import {ref} from "vue";
+import { useUserStore } from "@/store/userStore.js";
+import {computed} from "vue";
+
+const userStore = useUserStore();
+
+const isEmployer = computed(() => userStore.isEmployer);
 
 const model = ref({
   company_name: '',
@@ -80,11 +89,12 @@ async function createCompanyPostRequest() {
           }
       ),
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token.token}`
       },
     });
     const data = await response.json()
     console.log(data)
+
 
   } catch (error) {
     console.log(error)

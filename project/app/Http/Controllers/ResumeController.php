@@ -16,7 +16,7 @@ class ResumeController extends BaseController
      */
     public function index()
     {
-        return  response()->json($data =[Resume::all()]);
+        return  response()->json(Resume::all());
     }
 
     /**
@@ -29,7 +29,7 @@ class ResumeController extends BaseController
             'name',
             'tag',
         ], 'LIKE', $referense);
-        return  response()->json($data = $findData);
+        return  response()->json($findData);
     }
     public function findByTag($tag)
     {
@@ -37,7 +37,7 @@ class ResumeController extends BaseController
 
         $tagData=  DB::table('resumes')->whereAll(
             ['tag',], 'LIKE', $referense);
-        return  response()->json($data = $tagData);
+        return  response()->json($tagData);
     }
 
     /**
@@ -53,7 +53,6 @@ class ResumeController extends BaseController
             'birthdate'=>['required','date'],
             'citizenship'=>['required', 'string', 'max:255'],
             "work_permission"=>['required', 'string', 'max:255'],
-            'user_id'=>['required'],
             "gender"=>["required","boolean"],
             "tags"=>["required","string"]
         ]);
@@ -65,19 +64,19 @@ class ResumeController extends BaseController
             'birthdate'=>$request->birthdate,
             'citizenship'=>$request->citizenship,
             "work_permission"=>$request->work_permission,
-            'user_id'=>$request->user_id,
+            'user_id'=>$request->user()->id,
             "gender"=>$request->gender,
             "tags"=>$request->tags,
         ]);
-        return response()->json([1=> $resume]);
+        return response()->json($resume);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Resume $resume)
     {
-        return  response()->json( $data=Resume::find($id));
+        return  response()->json($resume);
     }
 
     /**

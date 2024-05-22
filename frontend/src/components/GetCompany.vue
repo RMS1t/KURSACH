@@ -41,7 +41,7 @@ onMounted(() => {
 @import "../assets/app.scss";
 .company {
   width: 542px;
-  height: 197px;
+  padding: $interval-l-large;
   box-shadow: var(--drop-shadow-for-item);
   border-left: 10px solid var(--color-for-button);
   border-radius: 23px;
