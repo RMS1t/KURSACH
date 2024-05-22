@@ -3,12 +3,12 @@
     <form class="create-vacancy" v-if="isEmployer">
       <div class="create-vacancy__field">
         <div class="create-vacancy__field-label">
-          <label for="name" class="create-vacancy__label">Введите название компании</label>
-          <input type="text" placeholder="Спутник" id="name" v-model="model.company_name" class="create-vacancy__input">
+          <label for="name" class="create-vacancy__label">Введите название вакансии</label>
+          <input type="text" placeholder="Фронтенд-разработчик" id="name" v-model="model.vac_name" class="create-vacancy__input">
         </div>
         <div class="create-vacancy__field-label">
-          <label for="address" class="create-vacancy__label">Адрес</label>
-          <input type="text" placeholder="Котовского 6" id="address" v-model="model.address" class="create-vacancy__input">
+          <label for="work" class="create-vacancy__label">Тип работы</label>
+          <input type="text" placeholder="Очно" id="work" v-model="model.work_type" class="create-vacancy__input">
         </div>
         <div class="create-vacancy__field-label">
           <label for="description" class="create-vacancy__label">Описание</label>
@@ -27,19 +27,19 @@
           <input type="text" placeholder="tagstagstags" id="tags" v-model="model.tags" class="create-vacancy__input">
         </div>
         <div class="create-vacancy__field-label">
-          <label for="number" class="create-vacancy__label">Номер</label>
-          <input type="number" placeholder="8467843" id="number" v-model="model.number" class="create-vacancy__input">
+          <label for="salary" class="create-vacancy__label">Зарплата</label>
+          <input type="number" placeholder="50000" id="salary" v-model="model.salary" class="create-vacancy__input">
         </div>
         <div class="create-vacancy__field-label">
-          <label for="type" class="create-vacancy__label">Введите вид компании</label>
-          <input type="text" placeholder="tagstagstags" id="type" v-model="model.company_type" class="create-vacancy__input">
+          <label for="required_education" class="create-vacancy__label">Образование</label>
+          <input type="text" placeholder="Среднее профессиональное" id="required_education" v-model="model.required_education" class="create-vacancy__input">
         </div>
         <div class="create-vacancy__field-label">
-          <label for="id" class="create-vacancy__label">Введите id пользователя</label>
-          <input type="number" placeholder="8467843" id="id" v-model="model.user_id" class="create-vacancy__input">
+          <label for="required_experience" class="create-vacancy__label">Требуемый опыт</label>
+          <input type="number" placeholder="0" id="required_experience" v-model="model.required_experience" class="create-vacancy__input">
         </div>
       </div>
-      <router-link to="/company"><button class="create-vacancy__send" @click="createCompanyPostRequest">Создать компанию</button></router-link>
+      <router-link to="/vacancy"><button class="create-vacancy__send" @click="createVacancyPostRequest">Создать компанию</button></router-link>
     </form>
     <div v-else>
       Ваша роль не позволяет вам создать вакансию
@@ -59,33 +59,33 @@ const userStore = useUserStore();
 const isEmployer = computed(() => userStore.isEmployer);
 
 const model = ref({
-  company_name: '',
-  address: '',
+  vac_name: '',
+  work_type: '',
   description: '',
   inn: '',
   kpp: '',
   tags: '',
-  number: '',
-  company_type: '',
-  user_id: ''
+  salary: '',
+  required_education: '',
+  required_experience: ''
 })
 
-async function createCompanyPostRequest() {
+async function createVacancyPostRequest() {
   const token = cookies.get('authData')
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/company/create`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/vacancy/create`, {
       method: 'POST',
       body: JSON.stringify(
           {
-            company_name: model.value.company_name,
-            address: model.value.address,
+            vac_name: model.value.vac_name,
+            work_type: model.value.work_type,
             description: model.value.description,
             inn: model.value.inn,
             kpp: model.value.kpp,
             tags: model.value.tags,
-            number: model.value.number,
-            company_type: model.value.company_type,
-            user_id: model.value.user_id
+            salary: model.value.salary,
+            required_education: model.value.required_education,
+            required_experience: model.value.required_experience
           }
       ),
       headers: {
