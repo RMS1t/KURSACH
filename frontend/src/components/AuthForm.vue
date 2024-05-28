@@ -32,7 +32,7 @@
 
 <script setup>
 
-import {onMounted, ref} from "vue";
+import {ref} from "vue";
 import {useCookies} from "vue3-cookies";
 import { useUserStore } from "@/store/userStore.js";
 

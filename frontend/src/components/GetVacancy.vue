@@ -23,14 +23,14 @@ import {onMounted, ref} from "vue";
 const vacancies = ref([])
 
 const vacanciesLoaded = ref(false);
-async function getResumes() {
+async function getVacancies() {
   const response = await fetch(`${import.meta.env.VITE_API_URL}/vacancy`)
   const data = await response.json()
   vacancies.value = data
   vacanciesLoaded.value = true
 }
 onMounted(() => {
-  getResumes();
+  getVacancies();
 })
 </script>
 <style lang="scss" scoped>

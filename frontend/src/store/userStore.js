@@ -17,6 +17,7 @@ export const useUserStore = defineStore('user', {
     },
     getters: {
         isEmployer: (state) => state.role === '1',
-        isJobSeeker: (state) => state.role === '2'
+        isJobSeeker: (state) => state.role === '2',
+        isAdmin: (state) => state.role === '0'
     }
 });
