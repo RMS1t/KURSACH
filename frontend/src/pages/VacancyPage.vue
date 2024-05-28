@@ -23,11 +23,6 @@ import HeaderComponent from "@/components/HeaderComponent.vue";
 import DesktopModal from "@/components/DesktopModal.vue";
 import CreateVacanсy from "@/components/CreateVacanсy.vue";
 import GetVacancy from "@/components/GetVacancy.vue";
-
-let showModal = false;
-let openModal = () => {
-  showModal = !showModal
-}
 </script>
 <style>
 .vacancy{
