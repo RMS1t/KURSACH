@@ -59,7 +59,7 @@ class ApiAuthController extends Controller
         }
         // 3
 
-        return response()->json(['token' => $user->createToken(rand())->plainTextToken], "role"=>$user->role);
+        return response()->json(['token' => $user->createToken(rand())->plainTextToken,"role"=>$user->role], );
         // 4
     }
 
