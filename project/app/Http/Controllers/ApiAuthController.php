@@ -42,7 +42,6 @@ class ApiAuthController extends Controller
     public function token(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string'],
             'email' => ['required', 'string'],
             'password' => ['required', 'string', 'min:3'],
         ]);
@@ -60,7 +59,7 @@ class ApiAuthController extends Controller
         }
         // 3
 
-        return response()->json(['token' => $user->createToken(rand())->plainTextToken]);
+        return response()->json(['token' => $user->createToken(rand())->plainTextToken], "role"=>$user->role);
         // 4
     }
 
