@@ -31,7 +31,7 @@ class CompanyController extends Controller
         ]);
         try {
             $company = Company::where('user_id', $request->user()->id)->first()->id;
-            return response("У вас уже есть комания под номером: ". $company);
+            return  response()->json(['message' => 'You already hawe a company with id:'.$company.'.'], 409);
         }
         catch (\ErrorException){
             $company= Company::create([
