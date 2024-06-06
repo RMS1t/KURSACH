@@ -19,6 +19,6 @@ class CompanyMiddleware
             return $next($request);
 
         }
-        return response("you should be company user", 403);
+        return response->json(['message' => "you should be company user"], 403);
     }
 }

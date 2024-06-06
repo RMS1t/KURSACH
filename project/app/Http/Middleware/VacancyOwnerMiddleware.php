@@ -24,10 +24,10 @@ class VacancyOwnerMiddleware
                 return $next($request);
 
             }
-            return response("you should be owner", 403);
+            return response()->json(['message' => "you should be owner"], 403);
         }
         catch (ErrorException){
-            return response("source not found", 404);
+            return  response()->json(['message' => "source not found"], 404);
         }
     }
 }

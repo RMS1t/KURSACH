@@ -19,7 +19,7 @@ class WorkerMiddleware
         if (($request->user()->role == 0) || ($request->user()->role == 2)){
             return $next($request);
         }
-        return response("yos should be ordinary user" , 403);
+        return  response()->json(['message' => "you should be ordinary user"], 403);
 
     }
 }
