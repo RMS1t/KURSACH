@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('citizenship');
             $table->string("work_permission");
             $table->foreignIdFor(\App\Models\User::class);
+            $table->string('res_name');
+            $table->text('description');
 
             $table->timestamps();
         });

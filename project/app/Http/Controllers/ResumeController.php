@@ -46,9 +46,11 @@ class ResumeController extends BaseController
     public function store(StoreResumeRequest $request)
     {
         $request->validate([
+            'res_name'=>['required', 'string', 'max:255'],
             "first_name"=>['required', 'string', 'max:255'],
             'name'=>['required', 'string', 'max:255'],
             "last_name"=>['required', 'string', 'max:255'],
+            'description'=>['required', 'string'],
             "resident_address"=>['required', 'string', 'max:255'],
             'birthdate'=>['required','date'],
             'citizenship'=>['required', 'string', 'max:255'],
@@ -67,6 +69,8 @@ class ResumeController extends BaseController
             'user_id'=>$request->user()->id,
             "gender"=>$request->gender,
             "tags"=>$request->tags,
+            'description'=>$request->description,
+            'res_name'=>$request->res_name,
         ]);
         return response()->json($resume);
     }
